@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>1036906649833-ijinjor4n2cekh86f0k91m45kci51vum.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.1036906649833-ijinjor4n2cekh86f0k91m45kci51vum</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDV5B1xpa1FT_EFML-eSsremTFkNhApBwk</string>
+	<key>GCM_SENDER_ID</key>
+	<string>1036906649833</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>Michael-F.NilesWestSchedule</string>
+	<key>PROJECT_ID</key>
+	<string>niles-west-schedule</string>
+	<key>STORAGE_BUCKET</key>
+	<string>niles-west-schedule.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:1036906649833:ios:ba2ea7eae71d8980</string>
+	<key>DATABASE_URL</key>
+	<string>https://niles-west-schedule.firebaseio.com</string>
+</dict>
+</plist>
