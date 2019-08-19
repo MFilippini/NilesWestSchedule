@@ -7,14 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		49B5580F230B2C250038C08E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 49B5580E230B2C250038C08E /* GoogleService-Info.plist */; };
 		49BDC96F230B2A0A00BCC96D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49BDC96E230B2A0A00BCC96D /* AppDelegate.swift */; };
 		49BDC971230B2A0A00BCC96D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49BDC970230B2A0A00BCC96D /* ViewController.swift */; };
 		49BDC974230B2A0A00BCC96D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 49BDC972230B2A0A00BCC96D /* Main.storyboard */; };
 		49BDC976230B2A0C00BCC96D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 49BDC975230B2A0C00BCC96D /* Assets.xcassets */; };
 		49BDC979230B2A0C00BCC96D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 49BDC977230B2A0C00BCC96D /* LaunchScreen.storyboard */; };
+		DA8BE4A7E1CC75D8A3638F19 /* Pods_NilesWestSchedule.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BC9E21947D4CBF29A53D385 /* Pods_NilesWestSchedule.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		49B5580E230B2C250038C08E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		49BDC96B230B2A0A00BCC96D /* NilesWestSchedule.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NilesWestSchedule.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		49BDC96E230B2A0A00BCC96D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		49BDC970230B2A0A00BCC96D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -22,6 +25,9 @@
 		49BDC975230B2A0C00BCC96D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		49BDC978230B2A0C00BCC96D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		49BDC97A230B2A0C00BCC96D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4BC9E21947D4CBF29A53D385 /* Pods_NilesWestSchedule.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NilesWestSchedule.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B1E6144919F0D00B26EC1CE3 /* Pods-NilesWestSchedule.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NilesWestSchedule.debug.xcconfig"; path = "Target Support Files/Pods-NilesWestSchedule/Pods-NilesWestSchedule.debug.xcconfig"; sourceTree = "<group>"; };
+		C981663C2BD6ED62B98CFD3D /* Pods-NilesWestSchedule.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NilesWestSchedule.release.xcconfig"; path = "Target Support Files/Pods-NilesWestSchedule/Pods-NilesWestSchedule.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,6 +35,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DA8BE4A7E1CC75D8A3638F19 /* Pods_NilesWestSchedule.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -40,6 +47,8 @@
 			children = (
 				49BDC96D230B2A0A00BCC96D /* NilesWestSchedule */,
 				49BDC96C230B2A0A00BCC96D /* Products */,
+				EA8487D8099B9506A79DB0FE /* Pods */,
+				4E7DA6709F33E2F452981135 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -59,9 +68,27 @@
 				49BDC972230B2A0A00BCC96D /* Main.storyboard */,
 				49BDC975230B2A0C00BCC96D /* Assets.xcassets */,
 				49BDC977230B2A0C00BCC96D /* LaunchScreen.storyboard */,
+				49B5580E230B2C250038C08E /* GoogleService-Info.plist */,
 				49BDC97A230B2A0C00BCC96D /* Info.plist */,
 			);
 			path = NilesWestSchedule;
+			sourceTree = "<group>";
+		};
+		4E7DA6709F33E2F452981135 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				4BC9E21947D4CBF29A53D385 /* Pods_NilesWestSchedule.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		EA8487D8099B9506A79DB0FE /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				B1E6144919F0D00B26EC1CE3 /* Pods-NilesWestSchedule.debug.xcconfig */,
+				C981663C2BD6ED62B98CFD3D /* Pods-NilesWestSchedule.release.xcconfig */,
+			);
+			path = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -71,9 +98,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 49BDC97D230B2A0C00BCC96D /* Build configuration list for PBXNativeTarget "NilesWestSchedule" */;
 			buildPhases = (
+				650BDFE287C6C109EC4E51A3 /* [CP] Check Pods Manifest.lock */,
 				49BDC967230B2A0A00BCC96D /* Sources */,
 				49BDC968230B2A0A00BCC96D /* Frameworks */,
 				49BDC969230B2A0A00BCC96D /* Resources */,
+				76D8C430045895471F4C699A /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -124,11 +153,63 @@
 			files = (
 				49BDC979230B2A0C00BCC96D /* LaunchScreen.storyboard in Resources */,
 				49BDC976230B2A0C00BCC96D /* Assets.xcassets in Resources */,
+				49B5580F230B2C250038C08E /* GoogleService-Info.plist in Resources */,
 				49BDC974230B2A0A00BCC96D /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		650BDFE287C6C109EC4E51A3 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-NilesWestSchedule-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		76D8C430045895471F4C699A /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-NilesWestSchedule/Pods-NilesWestSchedule-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
+				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
+				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-NilesWestSchedule/Pods-NilesWestSchedule-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		49BDC967230B2A0A00BCC96D /* Sources */ = {
@@ -280,6 +361,7 @@
 		};
 		49BDC97E230B2A0C00BCC96D /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B1E6144919F0D00B26EC1CE3 /* Pods-NilesWestSchedule.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -298,6 +380,7 @@
 		};
 		49BDC97F230B2A0C00BCC96D /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C981663C2BD6ED62B98CFD3D /* Pods-NilesWestSchedule.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
