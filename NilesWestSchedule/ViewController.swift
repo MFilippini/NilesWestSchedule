@@ -12,6 +12,8 @@ import FirebaseDatabase
 
 var todaysDate = ""
 var dailySchedule: [[Any]] = []
+var scheduleName = ""
+
     /*
         Period = [PeriodName, stringStartTime, stringEndTime, 24hrStartTime, 24hrEndTime] filled after loadSchedule is completed
         Filled durring loadSchedule()
@@ -25,12 +27,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         ref = Database.database().reference()
-        setColors()
-        loadSchedule() //pulls data from database and organizes i
-    }
-    
-    func setColors(){
-        
+        loadSchedule() //pulls data from database, checks for special schedule, and organizes
     }
     
     func loadSchedule(){
@@ -66,6 +63,8 @@ class ViewController: UIViewController {
                         }
                         
                         dailySchedule.append([key,startTime,endTime,realStartTime,realEndTime])
+                    }else{
+                        scheduleName = key
                     }
                 }
                 
@@ -84,6 +83,8 @@ class ViewController: UIViewController {
                 }
                 
                 print(dailySchedule)
+                
+                //reload collectionView
                 
             }) { (error) in
                 print(error.localizedDescription)
