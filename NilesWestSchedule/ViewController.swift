@@ -21,14 +21,20 @@ var specialMessage = ""
         string times are like 8:00
         real times are 15.40
     */
-class ViewController: UIViewController {
+class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     
     var ref: DatabaseReference!
+    
+    @IBOutlet weak var testName: UILabel!
+    @IBOutlet weak var scheduleCollectionView: UICollectionView!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         ref = Database.database().reference()
         loadSchedule() //pulls data from database, checks for special schedule, and organizes
+        scheduleCollectionView.delegate = self
+        scheduleCollectionView.dataSource = self
     }
     
     func loadSchedule(){
@@ -52,7 +58,7 @@ class ViewController: UIViewController {
                 
                 for (key,value) in scheduleDict{
                     let key = key as? String ?? "noString"
-                    if(key != "name"){
+                    if key != "name" {
                         let value = value as? NSDictionary ?? [:]
                         let startTime = value["start"] as? Double  ?? 0
                         let endTime = value["end"] as? Double  ?? 0
@@ -64,9 +70,14 @@ class ViewController: UIViewController {
                             realEndTime = endTime + 12
                         }
                         
+                        
+                        
+                        
+                        //:)
+                        
                         dailySchedule.append([key,startTime,endTime,realStartTime,realEndTime])
                     }else{
-                        scheduleName = key
+                        scheduleName = value as? String ?? "kool"
                     }
                 }
                 
@@ -86,8 +97,9 @@ class ViewController: UIViewController {
                 
                 print(dailySchedule)
                 
-                //reload collectionView
-                
+                self.scheduleCollectionView.reloadData()
+                self.testName.text = scheduleName + " " + todaysDate
+
             }) { (error) in
                 print(error.localizedDescription)
                 }
@@ -95,6 +107,18 @@ class ViewController: UIViewController {
         }) { (error) in
             print(error.localizedDescription)
         }
+    }
+    
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return dailySchedule.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! TestCollectionViewCell
+        cell.startTime.text = dailySchedule[indexPath.row][1] as? String
+        cell.endTime.text = dailySchedule[indexPath.row][2] as? String
+        return cell
     }
     
 }
