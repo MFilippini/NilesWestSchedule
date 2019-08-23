@@ -68,6 +68,11 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                             realEndTime = endTime + 12
                         }
                         
+                        
+                        
+                        
+                        //:)
+                        
                         dailySchedule.append([key,startTime,endTime,realStartTime,realEndTime])
                     }else{
                         scheduleName = value as? String ?? "kool"
