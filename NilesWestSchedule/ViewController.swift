@@ -13,6 +13,7 @@ import FirebaseDatabase
 var todaysDate = ""
 var dailySchedule: [[Any]] = []
 var scheduleName = ""
+var specialMessage = ""
 
     /*
         Period = [PeriodName, stringStartTime, stringEndTime, 24hrStartTime, 24hrEndTime] filled after loadSchedule is completed
@@ -42,7 +43,8 @@ class ViewController: UIViewController {
             var schedule = "regular"
             
             if date != [:]{
-                schedule = date["schedule"] as? String ?? "none"
+                schedule = date["schedule"] as? String ?? "failed"
+                specialMessage = date["reason"] as? String ?? "failed"
             }
             
             self.ref.child("schedules").child(schedule).observeSingleEvent(of: .value, with: { (snapshot) in
