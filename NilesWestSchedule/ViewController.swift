@@ -21,6 +21,7 @@ var specialMessage = ""
         string times are like 8:00
         real times are 15.40
     */
+
 class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     
     var ref: DatabaseReference!
@@ -29,12 +30,18 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     @IBOutlet weak var scheduleCollectionView: UICollectionView!
     
     
+
     override func viewDidLoad() {
         super.viewDidLoad()
         ref = Database.database().reference()
-        loadSchedule() //pulls data from database, checks for special schedule, and organizes
         scheduleCollectionView.delegate = self
         scheduleCollectionView.dataSource = self
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        dailySchedule.removeAll()
+        loadSchedule()
     }
     
     func loadSchedule(){
@@ -69,11 +76,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                             realStartTime = startTime + 12
                             realEndTime = endTime + 12
                         }
-                        
-                        
-                        
-                        
-                        //:)
                         
                         dailySchedule.append([key,startTime,endTime,realStartTime,realEndTime])
                     }else{
