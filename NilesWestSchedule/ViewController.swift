@@ -35,7 +35,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         scheduleCollectionView.delegate = self
         scheduleCollectionView.dataSource = self
     }
-    
+        
     func loadSchedule(){
         let cal = Calendar.current
         let components = cal.dateComponents([ .month, .day, .weekday], from: Date())
@@ -67,11 +67,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                             realStartTime = startTime + 12
                             realEndTime = endTime + 12
                         }
-                        
-                        
-                        
-                        
-                        //:)
                         
                         dailySchedule.append([key,startTime,endTime,realStartTime,realEndTime])
                     }else{

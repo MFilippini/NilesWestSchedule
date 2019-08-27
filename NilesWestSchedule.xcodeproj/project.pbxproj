@@ -14,6 +14,7 @@
 		49BDC976230B2A0C00BCC96D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 49BDC975230B2A0C00BCC96D /* Assets.xcassets */; };
 		49BDC979230B2A0C00BCC96D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 49BDC977230B2A0C00BCC96D /* LaunchScreen.storyboard */; };
 		4AEAAFDB230F202100FAC1A5 /* TestCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AEAAFDA230F202100FAC1A5 /* TestCollectionViewCell.swift */; };
+		4AEAAFDD2315B67D00FAC1A5 /* Raleway in Resources */ = {isa = PBXBuildFile; fileRef = 4AEAAFDC2315B67D00FAC1A5 /* Raleway */; };
 		DA8BE4A7E1CC75D8A3638F19 /* Pods_NilesWestSchedule.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BC9E21947D4CBF29A53D385 /* Pods_NilesWestSchedule.framework */; };
 /* End PBXBuildFile section */
 
@@ -27,6 +28,7 @@
 		49BDC978230B2A0C00BCC96D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		49BDC97A230B2A0C00BCC96D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4AEAAFDA230F202100FAC1A5 /* TestCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestCollectionViewCell.swift; sourceTree = "<group>"; };
+		4AEAAFDC2315B67D00FAC1A5 /* Raleway */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Raleway; sourceTree = "<group>"; };
 		4BC9E21947D4CBF29A53D385 /* Pods_NilesWestSchedule.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NilesWestSchedule.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B1E6144919F0D00B26EC1CE3 /* Pods-NilesWestSchedule.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NilesWestSchedule.debug.xcconfig"; path = "Target Support Files/Pods-NilesWestSchedule/Pods-NilesWestSchedule.debug.xcconfig"; sourceTree = "<group>"; };
 		C981663C2BD6ED62B98CFD3D /* Pods-NilesWestSchedule.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NilesWestSchedule.release.xcconfig"; path = "Target Support Files/Pods-NilesWestSchedule/Pods-NilesWestSchedule.release.xcconfig"; sourceTree = "<group>"; };
@@ -73,6 +75,7 @@
 				49BDC977230B2A0C00BCC96D /* LaunchScreen.storyboard */,
 				49B5580E230B2C250038C08E /* GoogleService-Info.plist */,
 				49BDC97A230B2A0C00BCC96D /* Info.plist */,
+				4AEAAFDC2315B67D00FAC1A5 /* Raleway */,
 			);
 			path = NilesWestSchedule;
 			sourceTree = "<group>";
@@ -155,6 +158,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				49BDC979230B2A0C00BCC96D /* LaunchScreen.storyboard in Resources */,
+				4AEAAFDD2315B67D00FAC1A5 /* Raleway in Resources */,
 				49BDC976230B2A0C00BCC96D /* Assets.xcassets in Resources */,
 				49B5580F230B2C250038C08E /* GoogleService-Info.plist in Resources */,
 				49BDC974230B2A0A00BCC96D /* Main.storyboard in Resources */,
