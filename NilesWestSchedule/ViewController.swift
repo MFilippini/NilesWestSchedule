@@ -13,6 +13,7 @@ import FirebaseDatabase
 var todaysDate = ""
 var dailySchedule: [[Any]] = []
 var scheduleName = ""
+var specialMessage = ""
 
     /*
         Period = [PeriodName, stringStartTime, stringEndTime, 24hrStartTime, 24hrEndTime] filled after loadSchedule is completed
@@ -20,6 +21,7 @@ var scheduleName = ""
         string times are like 8:00
         real times are 15.40
     */
+
 class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     
     var ref: DatabaseReference!
@@ -28,14 +30,20 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     @IBOutlet weak var scheduleCollectionView: UICollectionView!
     
     
+
     override func viewDidLoad() {
         super.viewDidLoad()
         ref = Database.database().reference()
-        loadSchedule() //pulls data from database, checks for special schedule, and organizes
         scheduleCollectionView.delegate = self
         scheduleCollectionView.dataSource = self
     }
-        
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        dailySchedule.removeAll()
+        loadSchedule()
+    }
+    
     func loadSchedule(){
         let cal = Calendar.current
         let components = cal.dateComponents([ .month, .day, .weekday], from: Date())
@@ -48,7 +56,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             var schedule = "regular"
             
             if date != [:]{
-                schedule = date["schedule"] as? String ?? "none"
+                schedule = date["schedule"] as? String ?? "failed"
+                specialMessage = date["reason"] as? String ?? "failed"
             }
             
             self.ref.child("schedules").child(schedule).observeSingleEvent(of: .value, with: { (snapshot) in
