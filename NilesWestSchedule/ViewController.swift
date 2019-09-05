@@ -50,7 +50,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     func loadSchedule(){
         dailySchedule.removeAll()
-
+        usersSchedule.removeAll()
+        
         let group = DispatchGroup()
         group.enter()
         
