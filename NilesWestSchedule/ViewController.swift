@@ -56,7 +56,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         
         DispatchQueue.global(qos: .userInitiated).async { [weak self] in
 
-        
             let cal = Calendar.current
             let components = cal.dateComponents([ .month, .day, .weekday], from: Date())
             print("date\(components)")
@@ -103,12 +102,10 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                     formater.minimumFractionDigits = 2
                     formater.roundingMode = .halfUp
                     
-
                     for i in 0..<dailySchedule.endIndex {
                         dailySchedule[i][1] = formater.string(from: NSNumber(value: dailySchedule[i][1] as? Double ?? 0)) ?? "0"
                         dailySchedule[i][2] = formater.string(from: NSNumber(value: dailySchedule[i][2] as? Double ?? 0)) ?? "0"
                     }
-                    
                     
                     unNeededClasses = ["Early Bird A","Early Bird B","Early Bird C"]
                     
@@ -118,7 +115,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                             usersSchedule.append(period)
                         }
                     }
-                    
                     
                     DispatchQueue.main.async { [weak self] in
                         self?.scheduleCollectionView.reloadData()
@@ -135,9 +131,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             }
         }
         
-    
         group.notify(queue: .main) {
-            self.timeTillNextUpdate = 0.01
+            self.timeTillNextUpdate = 0.001
             self.scheduleNewUpdate()
         }
     }
@@ -148,8 +143,15 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         update?.cancel()
         
         update = DispatchWorkItem { [weak self] in
-            
-            DispatchQueue.main.async {
+            //remember to go to MAIN thread to change UI label
+            /*
+             
+             DispatchQueue.main.async { [weak self] in
+                label.text = IDK What to say
+             }
+
+            */
+            DispatchQueue.global(qos: .background).sync {
                 let formater = DateFormatter()
                 formater.dateFormat = "HH.mm"
                 let currentTime = Double(formater.string(from: Date())) ?? 0
@@ -192,22 +194,20 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             self?.scheduleNewUpdate()
         }
         
-        print(timeTillNextUpdate!)
+        print("Time till next Update: \(timeTillNextUpdate!)")
         
         DispatchQueue.global(qos: .utility).asyncAfter(deadline: .now() + abs(timeTillNextUpdate!),execute: update!)
     }
     
     
-    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return dailySchedule.count
+        return usersSchedule.count
     }
-    
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! TestCollectionViewCell
-        cell.startTime.text = dailySchedule[indexPath.row][1] as? String
-        cell.endTime.text = dailySchedule[indexPath.row][2] as? String
+        cell.startTime.text = usersSchedule[indexPath.row][1] as? String
+        cell.endTime.text = usersSchedule[indexPath.row][2] as? String
         return cell
     }
     
