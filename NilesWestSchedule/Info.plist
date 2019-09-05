@@ -4,14 +4,14 @@
 <dict>
 	<key>UIAppFonts</key>
 	<array>
-		<string>Raleway-Thin</string>
-		<string>Raleway-SemiBold</string>
-		<string>Raleway-Regular</string>
-		<string>Raleway-Medium</string>
-		<string>Raleway-Light</string>
-		<string>Raleway-ExtraBold</string>
-		<string>Raleway-Bold</string>
-		<string>Raleway-Black</string>
+		<string>Raleway-Thin.ttf</string>
+		<string>Raleway-SemiBold.ttf</string>
+		<string>Raleway-Regular.ttf</string>
+		<string>Raleway-Medium.ttf</string>
+		<string>Raleway-Light.ttf</string>
+		<string>Raleway-ExtraBold.ttf</string>
+		<string>Raleway-Bold.ttf</string>
+		<string>Raleway-Black.ttf</string>
 	</array>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>

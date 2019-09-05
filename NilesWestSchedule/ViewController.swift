@@ -26,16 +26,31 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     var ref: DatabaseReference!
     
-    @IBOutlet weak var testName: UILabel!
+    @IBOutlet weak var dateLabel: UILabel!
+    @IBOutlet weak var scheduleDiscriptorLabel: UILabel!
     @IBOutlet weak var scheduleCollectionView: UICollectionView!
-    
-    
 
     override func viewDidLoad() {
         super.viewDidLoad()
         ref = Database.database().reference()
         scheduleCollectionView.delegate = self
         scheduleCollectionView.dataSource = self
+//        scheduleCollectionView.layer.cornerRadius = 7
+//        scheduleCollectionView.layer.shadowColor = UIColor.gray.cgColor
+//        scheduleCollectionView.layer.shadowOffset = CGSize(width: 0, height: 1.2)
+//        scheduleCollectionView.layer.shadowRadius = 1.2
+//        scheduleCollectionView.layer.shadowOpacity = 1.0
+//        scheduleCollectionView.layer.masksToBounds = false
+//        scheduleCollectionView.layer.shadowPath = UIBezierPath(roundedRect:scheduleCollectionView.bounds, cornerRadius: 7).cgPath
+        
+        for family: String in UIFont.familyNames
+        {
+            print(family)
+            for names: String in UIFont.fontNames(forFamilyName: family)
+            {
+                print("== \(names)")
+            }
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -100,7 +115,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                 print(dailySchedule)
                 
                 self.scheduleCollectionView.reloadData()
-                self.testName.text = scheduleName + " " + todaysDate
+                self.scheduleDiscriptorLabel.text = scheduleName + " " + todaysDate
 
             }) { (error) in
                 print(error.localizedDescription)
@@ -118,8 +133,26 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! TestCollectionViewCell
-        cell.startTime.text = dailySchedule[indexPath.row][1] as? String
-        cell.endTime.text = dailySchedule[indexPath.row][2] as? String
+        cell.backgroundColor = .clear
+        let colorTop = UIColor(red: 203.0/255.0, green: 45.0/255.0, blue: 62.0/255.0, alpha: 1.0).cgColor
+        let colorBottom = UIColor(red: 239.0/255.0, green: 71.0/255.0, blue: 58.0/255.0, alpha: 1.0).cgColor
+        
+//        let gradient = CAGradientLayer()
+//        gradient.colors = [colorTop, colorBottom]
+//        gradient.locations = [0.0, 1.0]
+//        gradient.frame = cell.bounds
+//        cell.layer.insertSublayer(gradient, at: 0)
+        cell.layer.cornerRadius = 7
+        cell.layer.shadowColor = UIColor.gray.cgColor
+        cell.layer.shadowOffset = CGSize(width: 0, height: 1.2)
+        cell.layer.shadowRadius = 1.2
+        cell.layer.shadowOpacity = 1.0
+        cell.layer.masksToBounds = false
+        cell.layer.shadowPath = UIBezierPath(roundedRect:cell.bounds, cornerRadius: 16).cgPath
+        cell.layer.cornerRadius = 16
+        cell.backgroundColor = .white
+        cell.startTime.text = dailySchedule[indexPath.row][0] as? String
+        cell.endTime.text = String(dailySchedule[indexPath.row][1] as? String ?? "e") + " - " + String(dailySchedule[indexPath.row][2] as? String ?? "w")
         return cell
     }
     
