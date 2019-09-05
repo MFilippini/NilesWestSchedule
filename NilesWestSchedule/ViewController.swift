@@ -11,9 +11,13 @@ import Firebase
 import FirebaseDatabase
 
 var todaysDate = ""
+
 var dailySchedule: [[Any]] = []
-var unNeededClasses: [String] = []
 var usersSchedule: [[Any]] = []
+var dailyScheduleTemp: [[Any]] = []
+var usersScheduleTemp: [[Any]] = []
+
+var unNeededClasses: [String] = []
 var scheduleName = ""
 var specialMessage = ""
 
@@ -49,8 +53,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     }
     
     func loadSchedule(){
-        dailySchedule.removeAll()
-        usersSchedule.removeAll()
+        dailyScheduleTemp.removeAll()
+        usersScheduleTemp.removeAll()
         
         let group = DispatchGroup()
         group.enter()
@@ -89,13 +93,13 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                                 realEndTime = endTime + 12
                             }
                             
-                            dailySchedule.append([key,startTime,endTime,realStartTime,realEndTime])
+                            dailyScheduleTemp.append([key,startTime,endTime,realStartTime,realEndTime])
                         }else{
                             scheduleName = value as? String ?? "kool"
                         }
                     }
                     
-                    dailySchedule = dailySchedule.sorted{($0[3] as! Double) < ($1[3]as! Double)}
+                    dailyScheduleTemp = dailyScheduleTemp.sorted{($0[3] as! Double) < ($1[3]as! Double)}
                     
                     let formater = NumberFormatter()
                     formater.decimalSeparator = ":"
@@ -103,19 +107,22 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                     formater.minimumFractionDigits = 2
                     formater.roundingMode = .halfUp
                     
-                    for i in 0..<dailySchedule.endIndex {
-                        dailySchedule[i][1] = formater.string(from: NSNumber(value: dailySchedule[i][1] as? Double ?? 0)) ?? "0"
-                        dailySchedule[i][2] = formater.string(from: NSNumber(value: dailySchedule[i][2] as? Double ?? 0)) ?? "0"
+                    for i in 0..<dailyScheduleTemp.endIndex {
+                        dailyScheduleTemp[i][1] = formater.string(from: NSNumber(value: dailyScheduleTemp[i][1] as? Double ?? 0)) ?? "0"
+                        dailyScheduleTemp[i][2] = formater.string(from: NSNumber(value: dailyScheduleTemp[i][2] as? Double ?? 0)) ?? "0"
                     }
                     
                     unNeededClasses = ["Early Bird A","Early Bird B","Early Bird C"]
                     
-                    for period in dailySchedule{
+                    for period in dailyScheduleTemp{
                         let periodName = period[0]
                         if !(unNeededClasses.contains("\(periodName)")){
-                            usersSchedule.append(period)
+                            usersScheduleTemp.append(period)
                         }
                     }
+                    
+                    usersSchedule = usersScheduleTemp
+                    dailySchedule = dailyScheduleTemp
                     
                     DispatchQueue.main.async { [weak self] in
                         self?.scheduleCollectionView.reloadData()
@@ -152,7 +159,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
              }
 
             */
-            DispatchQueue.global(qos: .background).sync {
+            DispatchQueue.global(qos: .userInitiated).sync {
                 let formater = DateFormatter()
                 formater.dateFormat = "HH.mm"
                 let currentTime = Double(formater.string(from: Date())) ?? 0
