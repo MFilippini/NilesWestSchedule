@@ -189,7 +189,13 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                 let secondsTimeStart = startInt*3600 + (startDouble - startInt)*6000
                 let secondsTimeEnd = endInt*3600 + (endDouble! - endInt)*6000
                 
-                self?.timeTillNextUpdate = abs(secondsTimeEnd - secondsTimeStart)
+                //subtract seconds already in minute
+                
+                let formaterSec = DateFormatter()
+                formaterSec.dateFormat = "ss.SSSS"
+                let secPassed = Double(formaterSec.string(from: Date())) ?? 0
+                
+                self?.timeTillNextUpdate = abs(secondsTimeEnd - secondsTimeStart - secPassed)
             }
             self?.scheduleNewUpdate()
         }
