@@ -141,7 +141,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                     
                     DispatchQueue.main.async { [weak self] in
                         self?.scheduleCollectionView.reloadData()
-                        self?.testName.text = scheduleName + " " + todaysDate
+                        self?.scheduleDiscriptorLabel.text = scheduleName + " " + todaysDate
                     }
                     group.leave()
                     
