@@ -34,6 +34,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     var update: DispatchWorkItem?
     var timeTillNextUpdate: Double?
     var nextUpdateTime: String?
+    var timeTillNextClass: String?
     
     @IBOutlet weak var testName: UILabel!
     @IBOutlet weak var scheduleCollectionView: UICollectionView!
@@ -112,7 +113,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                         dailyScheduleTemp[i][2] = formater.string(from: NSNumber(value: dailyScheduleTemp[i][2] as? Double ?? 0)) ?? "0"
                     }
                     
-                    unNeededClasses = ["Early Bird A","Early Bird B","Early Bird C"]
+                    unNeededClasses = ["Early Bird A","Early Bird B","Period 1"]
                     
                     for period in dailyScheduleTemp{
                         let periodName = period[0]
@@ -200,10 +201,10 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                 //subtract seconds already in minute
                 
                 let formaterSec = DateFormatter()
-                formaterSec.dateFormat = "ss.SSSS"
+                formaterSec.dateFormat = "ss.SSS"
                 let secPassed = Double(formaterSec.string(from: Date())) ?? 0
-                
-                self?.timeTillNextUpdate = abs(secondsTimeEnd - secondsTimeStart - secPassed)
+                self?.timeTillNextClass = "\(secondsTimeEnd - secondsTimeStart - secPassed)"
+                self?.timeTillNextUpdate = 60 - secPassed
             }
             self?.scheduleNewUpdate()
         }
