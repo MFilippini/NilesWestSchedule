@@ -26,6 +26,7 @@ var specialMessage = ""
         Filled durring loadSchedule()
         string times are like 8:00
         real times are 15.40
+ 
     */
 
 class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
