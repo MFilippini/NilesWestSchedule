@@ -12,6 +12,8 @@ import FirebaseDatabase
 
 var todaysDate = ""
 var dailySchedule: [[Any]] = []
+var unNeededClasses: [String] = []
+var usersSchedule: [[Any]] = []
 var scheduleName = ""
 var specialMessage = ""
 
@@ -26,7 +28,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     var ref: DatabaseReference!
     var update: DispatchWorkItem?
-    
+    var timeTillNextUpdate: Double?
+    var nextUpdateTime: String?
     
     @IBOutlet weak var testName: UILabel!
     @IBOutlet weak var scheduleCollectionView: UICollectionView!
@@ -106,18 +109,22 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                         dailySchedule[i][2] = formater.string(from: NSNumber(value: dailySchedule[i][2] as? Double ?? 0)) ?? "0"
                     }
                     
-                   // print(dailySchedule)
-                    print("loaded")
+                    
+                    unNeededClasses = ["Early Bird A","Early Bird B","Early Bird C"]
+                    
+                    for period in dailySchedule{
+                        let periodName = period[0]
+                        if !(unNeededClasses.contains("\(periodName)")){
+                            usersSchedule.append(period)
+                        }
+                    }
+                    
                     
                     DispatchQueue.main.async { [weak self] in
                         self?.scheduleCollectionView.reloadData()
                         self?.testName.text = scheduleName + " " + todaysDate
-                        print("updated")
                     }
-                    
-                    print("leave before")
                     group.leave()
-                    print("leave after")
                     
                 }) { (error) in
                     print(error.localizedDescription)
@@ -129,8 +136,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         }
         
     
-        
         group.notify(queue: .main) {
+            self.timeTillNextUpdate = 0.01
             self.scheduleNewUpdate()
         }
     }
@@ -142,17 +149,52 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         
         update = DispatchWorkItem { [weak self] in
             
-            DispatchQueue.main.async { [weak self] in
+            DispatchQueue.main.async {
                 let formater = DateFormatter()
                 formater.dateFormat = "HH.mm"
-                let currentTime = formater.string(from: Date())
+                let currentTime = Double(formater.string(from: Date())) ?? 0
                 
+                if(usersSchedule[0][3] as? Double ?? 0 >= currentTime){
+                    print("before school")
+                    self?.nextUpdateTime = "\(usersSchedule[0][3])"
+                }
+                else if(usersSchedule[usersSchedule.count - 1][4] as? Double ?? 0 <= currentTime){
+                    print("school is over")
+                    self?.nextUpdateTime = "\(usersSchedule[0][3])"
+                }else{
+                    for period in usersSchedule{
+                        // timeIndex 3
+                        if(currentTime < (period[3] as? Double ?? 0) ){
+                            print("Time till period start: \(currentTime - (period[3] as? Double ?? 0)) ")
+                            self?.nextUpdateTime = "\(period[3])"
+                            break
+                            
+                        }else if(currentTime < (period[4] as? Double ?? 0) ){
+                            print("Time till period end: \(currentTime - (period[4] as? Double ?? 0))")
+                            self?.nextUpdateTime = "\(period[4])"
+                            break
+                        }
+                    }
+                }
+                // get time till update in seconds
+                
+                let startDouble = Double(currentTime)
+                let endDouble = Double((self?.nextUpdateTime)!)
+                
+                let startInt = Double(Int(startDouble))
+                let endInt = Double(Int(endDouble!))
+                
+                let secondsTimeStart = startInt*3600 + (startDouble - startInt)*6000
+                let secondsTimeEnd = endInt*3600 + (endDouble! - endInt)*6000
+                
+                self?.timeTillNextUpdate = abs(secondsTimeEnd - secondsTimeStart)
             }
-
             self?.scheduleNewUpdate()
         }
         
-        DispatchQueue.global(qos: .utility).asyncAfter(deadline: .now() + 5,execute: update!)
+        print(timeTillNextUpdate!)
+        
+        DispatchQueue.global(qos: .utility).asyncAfter(deadline: .now() + abs(timeTillNextUpdate!),execute: update!)
     }
     
     
