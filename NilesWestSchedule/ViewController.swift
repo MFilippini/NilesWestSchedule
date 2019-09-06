@@ -94,8 +94,11 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             self?.ref.child("dates").observeSingleEvent(of: .value, with: { (snapshot) in
                 let dates = snapshot.value as? [String:NSDictionary] ?? [:]
                 var schedule = "regular"
-                upcomingSpecialDays = dates
-                print(dates)
+                
+                for (date,values) in dates{
+                    upcomingSpecialDays.append([date,values["schedule"]])
+                }
+                print(upcomingSpecialDays)
                 print(dates["\(currentMonth)-\(currentDay)"])
                 
                 if dates["\(currentMonth)-\(currentDay)"] != nil{
