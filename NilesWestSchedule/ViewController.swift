@@ -40,12 +40,15 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var scheduleDiscriptorLabel: UILabel!
     @IBOutlet weak var scheduleCollectionView: UICollectionView!
-
+    @IBOutlet weak var upcomingDates: UICollectionView!
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         ref = Database.database().reference()
         scheduleCollectionView.delegate = self
         scheduleCollectionView.dataSource = self
+        upcomingDates.delegate = self
+        upcomingDates.dataSource = self
 //        scheduleCollectionView.layer.cornerRadius = 7
 //        scheduleCollectionView.layer.shadowColor = UIColor.gray.cgColor
 //        scheduleCollectionView.layer.shadowOffset = CGSize(width: 0, height: 1.2)
@@ -73,8 +76,12 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         dailyScheduleTemp.removeAll()
         usersScheduleTemp.removeAll()
         
+        
+        
+        
         let group = DispatchGroup()
         group.enter()
+        
         
         DispatchQueue.global(qos: .userInitiated).async { [weak self] in
 
@@ -83,6 +90,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             print("date\(components)")
             let currentMonth = components.month ?? 0
             let currentDay = components.day ?? 0
+            
+            self?.dateLabel.text = String(currentMonth) + "/" + String(currentDay)
             
             self?.ref.child("dates").child("\(currentMonth)-\(currentDay)").observeSingleEvent(of: .value, with: { (snapshot) in
                 let date = snapshot.value as? NSDictionary ?? [:]
@@ -236,28 +245,35 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! TestCollectionViewCell
-        cell.backgroundColor = .clear
-        let colorTop = UIColor(red: 203.0/255.0, green: 45.0/255.0, blue: 62.0/255.0, alpha: 1.0).cgColor
-        let colorBottom = UIColor(red: 239.0/255.0, green: 71.0/255.0, blue: 58.0/255.0, alpha: 1.0).cgColor
+       // if collectionView == scheduleCollectionView {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! TestCollectionViewCell
+            cell.backgroundColor = .clear
+            let colorTop = UIColor(red: 203.0/255.0, green: 45.0/255.0, blue: 62.0/255.0, alpha: 1.0).cgColor
+            let colorBottom = UIColor(red: 239.0/255.0, green: 71.0/255.0, blue: 58.0/255.0, alpha: 1.0).cgColor
         
-//        let gradient = CAGradientLayer()
-//        gradient.colors = [colorTop, colorBottom]
-//        gradient.locations = [0.0, 1.0]
-//        gradient.frame = cell.bounds
-//        cell.layer.insertSublayer(gradient, at: 0)
-        cell.layer.cornerRadius = 7
-        cell.layer.shadowColor = UIColor.gray.cgColor
-        cell.layer.shadowOffset = CGSize(width: 0, height: 1.2)
-        cell.layer.shadowRadius = 1.2
-        cell.layer.shadowOpacity = 1.0
-        cell.layer.masksToBounds = false
-        cell.layer.shadowPath = UIBezierPath(roundedRect:cell.bounds, cornerRadius: 16).cgPath
-        cell.layer.cornerRadius = 16
-        cell.backgroundColor = .white
-        cell.startTime.text = dailySchedule[indexPath.row][0] as? String
-        cell.endTime.text = String(dailySchedule[indexPath.row][1] as? String ?? "e") + " - " + String(dailySchedule[indexPath.row][2] as? String ?? "w")
-        return cell
+    //        let gradient = CAGradientLayer()
+    //        gradient.colors = [colorTop, colorBottom]
+    //        gradient.locations = [0.0, 1.0]
+    //        gradient.frame = cell.bounds
+    //        cell.layer.insertSublayer(gradient, at: 0)
+            cell.layer.cornerRadius = 7
+            cell.layer.shadowColor = UIColor.gray.cgColor
+            cell.layer.shadowOffset = CGSize(width: 0, height: 1.2)
+            cell.layer.shadowRadius = 1.2
+            cell.layer.shadowOpacity = 1.0
+            cell.layer.masksToBounds = false
+            cell.layer.shadowPath = UIBezierPath(roundedRect:cell.bounds, cornerRadius: 16).cgPath
+            cell.layer.cornerRadius = 16
+            cell.backgroundColor = .white
+            cell.startTime.text = usersSchedule[indexPath.row][0] as? String
+            cell.endTime.text = String(usersSchedule[indexPath.row][1] as? String ?? "e") + " - " + String(usersSchedule[indexPath.row][2] as? String ?? "w")
+            return cell
+//        } else {
+//            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "upcomingCell", for: indexPath) as! UpcomingCell
+//
+//
+//
+//        }
     }
     
 }
