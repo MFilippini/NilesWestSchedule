@@ -16,7 +16,7 @@ var dailySchedule: [[Any]] = []
 var usersSchedule: [[Any]] = []
 var dailyScheduleTemp: [[Any]] = []
 var usersScheduleTemp: [[Any]] = []
-
+var upcomingSpecialDays: [[Any]] = []
 var unNeededClasses: [String] = []
 var scheduleName = ""
 var specialMessage = ""
@@ -33,8 +33,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     var ref: DatabaseReference!
     var update: DispatchWorkItem?
     var timeTillNextUpdate: Double?
-    var nextUpdateTime: String?
-    var timeTillNextClass: String?
+    //var nextUpdateTime: String? //use for making 4 min till end
+    var timeTillNextClass: Double?
     
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var scheduleDiscriptorLabel: UILabel!
@@ -83,14 +83,20 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             let currentMonth = components.month ?? 0
             let currentDay = components.day ?? 0
             
-            self?.ref.child("dates").child("\(currentMonth)-\(currentDay)").observeSingleEvent(of: .value, with: { (snapshot) in
-                let date = snapshot.value as? NSDictionary ?? [:]
+            self?.ref.child("dates").observeSingleEvent(of: .value, with: { (snapshot) in
+                let dates = snapshot.value as? [String:NSDictionary] ?? [:]
                 var schedule = "regular"
+                upcomingSpecialDays = dates
+                print(dates)
+                print(dates["\(currentMonth)-\(currentDay)"])
                 
-                if date != [:]{
-                    schedule = date["schedule"] as? String ?? "failed"
-                    specialMessage = date["reason"] as? String ?? "failed"
+                if dates["\(currentMonth)-\(currentDay)"] != nil{
+                    let date = dates["\(currentMonth)-\(currentDay)"]
+                    schedule = date?["schedule"] as? String ?? "failed"
+                    specialMessage = date?["reason"] as? String ?? "failed"
                 }
+                
+                print(schedule)
                 
                 self?.ref.child("schedules").child(schedule).observeSingleEvent(of: .value, with: { (snapshot) in
                     let scheduleDict = snapshot.value as? NSDictionary ?? [:]
@@ -180,54 +186,74 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                 formater.dateFormat = "HH.mm"
                 let currentTime = Double(formater.string(from: Date())) ?? 0
                 
+                let formaterSec = DateFormatter()
+                formaterSec.dateFormat = "ss.SSS"
+                let secPassed = Double(formaterSec.string(from: Date())) ?? 0
+                self?.timeTillNextUpdate = 60 - secPassed
+                
+                
                 if(usersSchedule[0][3] as? Double ?? 0 >= currentTime){
                     print("before school")
-                    self?.nextUpdateTime = "\(usersSchedule[0][3])"
+                  //  self?.nextUpdateTime = "\(usersSchedule[0][3])"
                 }
                 else if(usersSchedule[usersSchedule.count - 1][4] as? Double ?? 0 <= currentTime){
                     print("school is over")
-                    self?.nextUpdateTime = "\(usersSchedule[0][3])"
+                  //  self?.nextUpdateTime = "\(usersSchedule[0][3])"
                 }else{
                     for period in usersSchedule{
                         // timeIndex 3
                         if(currentTime < (period[3] as? Double ?? 0) ){
-                            print("Time till period start: \(currentTime - (period[3] as? Double ?? 0)) ")
-                            self?.nextUpdateTime = "\(period[3])"
+                            self?.setTimeToNextClass(endTime: "\(period[3])")
+                            print("Time till period start: \(self?.timeTillNextClass!)")
+                            //self?.nextUpdateTime = "\(period[3])"
                             break
                             
                         }else if(currentTime < (period[4] as? Double ?? 0) ){
-                            print("Time till period end: \(currentTime - (period[4] as? Double ?? 0))")
-                            self?.nextUpdateTime = "\(period[4])"
+                            self?.setTimeToNextClass(endTime: "\(period[4])")
+                            print("Time till period end: \(self?.timeTillNextClass!)")
+                           // self?.nextUpdateTime = "\(period[4])"
                             break
                         }
                     }
                 }
-                // get time till update in seconds
-                
-                let startDouble = Double(currentTime)
-                let endDouble = Double((self?.nextUpdateTime)!)
-                
-                let startInt = Double(Int(startDouble))
-                let endInt = Double(Int(endDouble!))
-                
-                let secondsTimeStart = startInt*3600 + (startDouble - startInt)*6000
-                let secondsTimeEnd = endInt*3600 + (endDouble! - endInt)*6000
-                
-                //subtract seconds already in minute
-                
-                let formaterSec = DateFormatter()
-                formaterSec.dateFormat = "ss.SSS"
-                let secPassed = Double(formaterSec.string(from: Date())) ?? 0
-                self?.timeTillNextClass = "\(secondsTimeEnd - secondsTimeStart - secPassed)"
-                self?.timeTillNextUpdate = 60 - secPassed
             }
             self?.scheduleNewUpdate()
         }
+        
+        let formater = NumberFormatter()
+        formater.decimalSeparator = ":"
+        formater.maximumFractionDigits = 2
+        formater.minimumFractionDigits = 2
+        formater.roundingMode = .halfUp
+        
         
         print("Time till next Update: \(timeTillNextUpdate!)")
         
         DispatchQueue.global(qos: .utility).asyncAfter(deadline: .now() + abs(timeTillNextUpdate!),execute: update!)
     }
+    
+    func setTimeToNextClass (endTime: String){
+        let formater = DateFormatter()
+        formater.dateFormat = "HH.mm"
+        let currentTime = Double(formater.string(from: Date())) ?? 0
+        
+        let startDouble = Double(currentTime)
+        let endDouble = Double(endTime)
+    
+        let startInt = Double(Int(startDouble))
+        let endInt = Double(Int(endDouble!))
+    
+        let secondsTimeStart = startInt*3600 + (startDouble - startInt)*6000
+        let secondsTimeEnd = endInt*3600 + (endDouble! - endInt)*6000
+    
+        //subtract seconds already in minute
+    
+        let formaterSec = DateFormatter()
+        formaterSec.dateFormat = "ss.SSS"
+        let secPassed = Double(formaterSec.string(from: Date())) ?? 0
+        self.timeTillNextClass =  (secondsTimeEnd - secondsTimeStart - secPassed)
+    }
+    
     
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -254,8 +280,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         cell.layer.shadowPath = UIBezierPath(roundedRect:cell.bounds, cornerRadius: 16).cgPath
         cell.layer.cornerRadius = 16
         cell.backgroundColor = .white
-        cell.startTime.text = dailySchedule[indexPath.row][0] as? String
-        cell.endTime.text = String(dailySchedule[indexPath.row][1] as? String ?? "e") + " - " + String(dailySchedule[indexPath.row][2] as? String ?? "w")
+        cell.startTime.text = usersSchedule[indexPath.row][0] as? String
+        cell.endTime.text = String(usersSchedule[indexPath.row][1] as? String ?? "e") + " - " + String(usersSchedule[indexPath.row][2] as? String ?? "w")
         return cell
     }
     
