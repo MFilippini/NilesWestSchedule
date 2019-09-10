@@ -159,6 +159,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                     
                     DispatchQueue.main.async { [weak self] in
                         self?.scheduleCollectionView.reloadData()
+                        self?.upcomingDates.reloadData()
                         self?.scheduleDiscriptorLabel.text = scheduleName + " " + todaysDate
                     }
                     group.leave()
@@ -268,11 +269,15 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return usersSchedule.count
+        if collectionView == scheduleCollectionView {
+            return usersSchedule.count
+        } else {
+            return upcomingSpecialDays.count
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-       // if collectionView == scheduleCollectionView {
+       if collectionView == scheduleCollectionView {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! TestCollectionViewCell
             cell.backgroundColor = .clear
             let colorTop = UIColor(red: 203.0/255.0, green: 45.0/255.0, blue: 62.0/255.0, alpha: 1.0).cgColor
@@ -295,12 +300,14 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             cell.startTime.text = usersSchedule[indexPath.row][0] as? String
             cell.endTime.text = String(usersSchedule[indexPath.row][1] as? String ?? "e") + " - " + String(usersSchedule[indexPath.row][2] as? String ?? "w")
             return cell
-//        } else {
-//            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "upcomingCell", for: indexPath) as! UpcomingCell
-//
-//
-//
-//        }
+        } else {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "upcomingCell", for: indexPath) as! UpcomingCell
+        cell.dateLabel.text = (upcomingSpecialDays[indexPath.row][0] as? String)! + "/" + String((upcomingSpecialDays[indexPath.row][1] as? String)!)
+            
+            return cell
+
+
+        }
     }
     
 }
