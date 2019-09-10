@@ -17,6 +17,7 @@ var usersSchedule: [[Any]] = []
 var dailyScheduleTemp: [[Any]] = []
 var usersScheduleTemp: [[Any]] = []
 var upcomingSpecialDays: [[Any]] = []
+var upcomingSpecialDaysTemp: [[Any]] = []
 var unNeededClasses: [String] = []
 var scheduleName = ""
 var specialMessage = ""
@@ -26,7 +27,6 @@ var specialMessage = ""
         Filled durring loadSchedule()
         string times are like 8:00
         real times are 15.40
- 
     */
 
 class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
@@ -75,8 +75,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     func loadSchedule(){
         dailyScheduleTemp.removeAll()
         usersScheduleTemp.removeAll()
-        
-        
+        upcomingSpecialDaysTemp.removeAll()
         
         
         let group = DispatchGroup()
@@ -162,6 +161,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                         self?.upcomingDates.reloadData()
                         self?.scheduleDiscriptorLabel.text = scheduleName + " " + todaysDate
                     }
+                    
+                    
                     group.leave()
                     
                 }) { (error) in
@@ -274,10 +275,11 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         } else {
             return upcomingSpecialDays.count
         }
+        return upcomingSpecialDays.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-       if collectionView == scheduleCollectionView {
+        if collectionView == scheduleCollectionView {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! TestCollectionViewCell
             cell.backgroundColor = .clear
             let colorTop = UIColor(red: 203.0/255.0, green: 45.0/255.0, blue: 62.0/255.0, alpha: 1.0).cgColor
@@ -308,6 +310,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
 
 
         }
+
     }
     
 }
