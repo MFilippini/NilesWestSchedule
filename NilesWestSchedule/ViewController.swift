@@ -23,10 +23,19 @@ var scheduleName = ""
 var specialMessage = ""
 
     /*
-        Period = [PeriodName, stringStartTime, stringEndTime, 24hrStartTime, 24hrEndTime] filled after loadSchedule is completed
-        Filled durring loadSchedule()
-        string times are like 8:00
-        real times are 15.40
+        Schedules----------
+            - daily has all classes
+            - users has only classes that pertain to users
+ 
+            Period = [PeriodName, stringStartTime, stringEndTime, 24hrStartTime, 24hrEndTime] filled after loadSchedule is completed
+            Filled durring loadSchedule()
+            string times are like 8:00
+            real times are 15.40
+ 
+        Special Days----------
+            date= ["5/5","Late Start",1709]
+            is sorted and dates before today are removed
+ 
     */
 
 class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
@@ -83,25 +92,43 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         
         
         DispatchQueue.global(qos: .userInitiated).async { [weak self] in
-
-            let cal = Calendar.current
-            let components = cal.dateComponents([ .month, .day, .weekday], from: Date())
-            print("date\(components)")
-            let currentMonth = components.month ?? 0
-            let currentDay = components.day ?? 0
+            
+            let formater = DateFormatter()
+            formater.dateFormat = "MMdd"
+            let dateKey = formater.string(from: Date())
+            
+            
             
             self?.ref.child("dates").observeSingleEvent(of: .value, with: { (snapshot) in
                 let dates = snapshot.value as? [String:NSDictionary] ?? [:]
                 var schedule = "regular"
                 
-                for (date,values) in dates{
-                    upcomingSpecialDays.append([date,values["schedule"]])
+                for (key,values) in dates{
+                    let formater = DateFormatter()
+                    formater.dateFormat = "MMdd"
+                    let refDate = formater.date(from: key)!
+                    
+                    var todayDateDouble = Double(formater.string(from: Date())) ?? 0
+                    var refDateDouble = Double(key) ?? 0
+                    
+                    if(refDateDouble < 700){ //uptill july is previous year
+                        refDateDouble += 1200
+                    }
+                    if(todayDateDouble < 700){ //uptill july is previous year
+                        todayDateDouble += 1200
+                    }
+                    if(refDateDouble - todayDateDouble >= 0){
+                        formater.dateFormat = "M/dd"
+                        let dateFormatted = formater.string(from: refDate)
+                        upcomingSpecialDaysTemp.append([dateFormatted,values["name"] ?? "dne",refDateDouble])
+                    }
                 }
-                print(upcomingSpecialDays)
-                print(dates["\(currentMonth)-\(currentDay)"])
+                upcomingSpecialDaysTemp = upcomingSpecialDaysTemp.sorted{($0[2] as! Double) < ($1[2]as! Double)}
+
+                print(upcomingSpecialDaysTemp)
                 
-                if dates["\(currentMonth)-\(currentDay)"] != nil{
-                    let date = dates["\(currentMonth)-\(currentDay)"]
+                if dates[dateKey] != nil{
+                    let date = dates[dateKey]
                     schedule = date?["schedule"] as? String ?? "failed"
                     specialMessage = date?["reason"] as? String ?? "failed"
                 }
@@ -155,6 +182,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                     
                     usersSchedule = usersScheduleTemp
                     dailySchedule = dailyScheduleTemp
+                    upcomingSpecialDays = upcomingSpecialDaysTemp
                     
                     DispatchQueue.main.async { [weak self] in
                         self?.scheduleCollectionView.reloadData()
@@ -302,7 +330,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             return cell
         } else {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "upcomingCell", for: indexPath) as! UpcomingCell
-            cell.dateLabel.text = upcomingSpecialDays[indexPath.row][0] as! String
+            let cellText = "\(upcomingSpecialDays[indexPath.row][0]) \(upcomingSpecialDays[indexPath.row][1])"
+            cell.dateLabel.text = cellText
             return cell
 
         }
