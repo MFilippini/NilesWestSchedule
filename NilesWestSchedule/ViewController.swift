@@ -120,7 +120,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                     if(refDateDouble - todayDateDouble >= 0){
                         formater.dateFormat = "M/dd"
                         let dateFormatted = formater.string(from: refDate)
-                        upcomingSpecialDaysTemp.append([dateFormatted,values["name"] ?? "dne",refDateDouble])
+                        upcomingSpecialDaysTemp.append([dateFormatted,values["name"] ?? "falied",refDateDouble])
                     }
                 }
                 upcomingSpecialDaysTemp = upcomingSpecialDaysTemp.sorted{($0[2] as! Double) < ($1[2]as! Double)}
@@ -333,7 +333,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             let cellText = "\(upcomingSpecialDays[indexPath.row][0]) \(upcomingSpecialDays[indexPath.row][1])"
             cell.dateLabel.text = cellText
             return cell
-
         }
 
     }
