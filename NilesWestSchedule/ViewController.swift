@@ -49,15 +49,15 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var scheduleDiscriptorLabel: UILabel!
     @IBOutlet weak var scheduleCollectionView: UICollectionView!
-    @IBOutlet weak var upcomingDates: UICollectionView!
-        
+    @IBOutlet weak var masterButton: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         ref = Database.database().reference()
         scheduleCollectionView.delegate = self
         scheduleCollectionView.dataSource = self
-        upcomingDates.delegate = self
-        upcomingDates.dataSource = self
+        //upcomingDates.delegate = self
+       // upcomingDates.dataSource = self
 //        scheduleCollectionView.layer.cornerRadius = 7
 //        scheduleCollectionView.layer.shadowColor = UIColor.gray.cgColor
 //        scheduleCollectionView.layer.shadowOffset = CGSize(width: 0, height: 1.2)
@@ -117,10 +117,10 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                     if(todayDateDouble < 700){ //uptill july is previous year
                         todayDateDouble += 1200
                     }
-                    if(refDateDouble - todayDateDouble >= 0){
+                    if(refDateDouble - todayDateDouble > 0){
                         formater.dateFormat = "M/dd"
                         let dateFormatted = formater.string(from: refDate)
-                        upcomingSpecialDaysTemp.append([dateFormatted,values["name"] ?? "dne",refDateDouble])
+                        upcomingSpecialDaysTemp.append([dateFormatted,values["name"] ?? "falied",refDateDouble])
                     }
                 }
                 upcomingSpecialDaysTemp = upcomingSpecialDaysTemp.sorted{($0[2] as! Double) < ($1[2]as! Double)}
@@ -186,7 +186,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                     
                     DispatchQueue.main.async { [weak self] in
                         self?.scheduleCollectionView.reloadData()
-                        self?.upcomingDates.reloadData()
+                       // self?.upcomingDates.reloadData()
                         self?.scheduleDiscriptorLabel.text = scheduleName + " " + todaysDate
                     }
                     
@@ -248,7 +248,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                             print("Time till period start: \(self?.timeTillNextClass!)")
                             //self?.nextUpdateTime = "\(period[3])"
                             break
-                            
                         }else if(currentTime < (period[4] as? Double ?? 0) ){
                             self?.setTimeToNextClass(endTime: "\(period[4])")
                             print("Time till period end: \(self?.timeTillNextClass!)")
