@@ -21,6 +21,8 @@ var upcomingSpecialDaysTemp: [[Any]] = []
 var unNeededClasses: [String] = []
 var scheduleName = ""
 var specialMessage = ""
+var buttonDirection: Bool?
+var collapsingButtonArray: [UIButton] = []
 
     /*
         Schedules----------
@@ -56,6 +58,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         ref = Database.database().reference()
         scheduleCollectionView.delegate = self
         scheduleCollectionView.dataSource = self
+        buttonSetup()
+        addButtonsToArray()
         //upcomingDates.delegate = self
        // upcomingDates.dataSource = self
 //        scheduleCollectionView.layer.cornerRadius = 7
@@ -79,6 +83,102 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         loadSchedule()
+    }
+    
+    func buttonSetup(){
+        masterButton.backgroundColor = UIColor(hue: 205/360.0, saturation: 0.83, brightness: 0.84, alpha: 1)
+        masterButton.layer.cornerRadius = 25
+        buttonDirection = true
+        masterButton.addTarget(self, action: #selector(expandButton), for: .touchUpInside)
+        masterButton.addTarget(self, action: #selector(holdDownMaster), for: .touchDown)
+    }
+    
+    func addButtonsToArray(){
+        let start = CGRect(x: masterButton.frame.minX, y: masterButton.frame.minY, width: 50, height: 50)
+        let color = UIColor(hue: 149/360.0, saturation: 0.82, brightness: 0.84, alpha: 1)
+        
+        let movingViewZero = UIButton(frame: start)
+        collapsingButtonArray.append(movingViewZero)
+        movingViewZero.tag = 0
+        
+        let movingViewOne = UIButton(frame: start)
+        collapsingButtonArray.append(movingViewOne)
+        movingViewOne.tag = 1
+        
+        let movingViewTwo = UIButton(frame: start)
+        collapsingButtonArray.append(movingViewTwo)
+        movingViewTwo.tag = 2
+        
+        for button in collapsingButtonArray{
+            button.backgroundColor = color
+            button.layer.cornerRadius = 25
+            button.addTarget(self, action: #selector(subButton), for: .touchUpInside)
+            button.addTarget(self, action: #selector(holdDownSub), for: .touchDown)
+        }
+    }
+
+    @objc func holdDownMaster(sender: UIButton){
+        UIView.animate(withDuration: 0.02,
+            animations: {
+                sender.transform = CGAffineTransform(scaleX: 0.85, y: 0.85)
+                sender.backgroundColor = UIColor(hue: 205/360.0, saturation: 0.83, brightness: 0.7, alpha: 1)
+            }, completion: nil)
+    }
+    
+    
+    @objc func holdDownSub(sender: UIButton){
+        UIView.animate(withDuration: 0.05,
+            animations: {
+                sender.transform = CGAffineTransform(scaleX: 0.85, y: 0.85)
+                sender.backgroundColor = UIColor(hue: 149/360.0, saturation: 0.82, brightness: 0.7, alpha: 1)
+        }, completion: nil)
+    }
+    
+    @objc func subButton(sender: UIButton){
+        print(sender.tag)
+        UIView.animate(withDuration: 0.05) {
+            sender.transform = CGAffineTransform.identity
+            sender.backgroundColor = UIColor(hue: 149/360.0, saturation: 0.82, brightness: 0.84, alpha: 1)
+        }
+    }
+    
+    @objc func expandButton(sender: UIButton!) {
+        let masterCenter = masterButton.center
+        let masterCenterX = masterButton.center.x
+        let masterCenterY = masterButton.center.y
+
+        UIView.animate(withDuration: 0.02) {
+            sender.transform = CGAffineTransform.identity
+            sender.backgroundColor = UIColor(hue: 205/360.0, saturation: 0.83, brightness: 0.84, alpha: 1)
+        }
+        
+        if(buttonDirection!){
+            for button in collapsingButtonArray{
+                self.view.insertSubview(button, belowSubview: masterButton)
+            }
+            
+            UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.83, options: [.curveEaseInOut,.allowUserInteraction], animations: {
+                
+                collapsingButtonArray[0].center = CGPoint(x: masterCenterX, y: masterCenterY-125)
+                collapsingButtonArray[1].center = CGPoint(x: masterCenterX-88.388, y: masterCenterY-88.388)
+                collapsingButtonArray[2].center = CGPoint(x: masterCenterX-125, y: masterCenterY)
+                
+            }, completion: nil)
+        }else{
+            
+            UIView.animate(withDuration: 0.2, animations: {
+                
+                collapsingButtonArray[0].center = masterCenter
+                collapsingButtonArray[1].center = masterCenter
+                collapsingButtonArray[2].center = masterCenter
+                
+            }, completion: { (finished: Bool) in
+                for button in collapsingButtonArray{
+                    button.removeFromSuperview()
+                }
+            })
+        }
+        buttonDirection = !(buttonDirection!)
     }
     
     func loadSchedule(){
