@@ -87,14 +87,16 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     func buttonSetup(){
         masterButton.backgroundColor = UIColor(hue: 205/360.0, saturation: 0.83, brightness: 0.84, alpha: 1)
-        masterButton.layer.cornerRadius = 25
+        masterButton.layer.cornerRadius = 27
         buttonDirection = true
         masterButton.addTarget(self, action: #selector(expandButton), for: .touchUpInside)
         masterButton.addTarget(self, action: #selector(holdDownMaster), for: .touchDown)
+        masterButton.addTarget(self, action: #selector(cancelHoldMaster), for: .touchDragExit)
+        
     }
     
     func addButtonsToArray(){
-        let start = CGRect(x: masterButton.frame.minX, y: masterButton.frame.minY, width: 50, height: 50)
+        let start = masterButton.frame
         let color = UIColor(hue: 149/360.0, saturation: 0.82, brightness: 0.84, alpha: 1)
         
         let movingViewZero = UIButton(frame: start)
@@ -114,6 +116,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             button.layer.cornerRadius = 25
             button.addTarget(self, action: #selector(subButton), for: .touchUpInside)
             button.addTarget(self, action: #selector(holdDownSub), for: .touchDown)
+            button.addTarget(self, action: #selector(cancelHoldSub), for: .touchDragExit)
+
         }
     }
 
@@ -141,6 +145,21 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             sender.backgroundColor = UIColor(hue: 149/360.0, saturation: 0.82, brightness: 0.84, alpha: 1)
         }
     }
+
+    @objc func cancelHoldSub(sender: UIButton){
+        UIView.animate(withDuration: 0.02) {
+            sender.transform = CGAffineTransform.identity
+            sender.backgroundColor = UIColor(hue: 149/360.0, saturation: 0.82, brightness: 0.84, alpha: 1)
+        }
+    }
+    
+    @objc func cancelHoldMaster(sender: UIButton){
+        UIView.animate(withDuration: 0.02) {
+            sender.transform = CGAffineTransform.identity
+            sender.backgroundColor = UIColor(hue: 205/360.0, saturation: 0.83, brightness: 0.84, alpha: 1)
+        }
+    }
+    
     
     @objc func expandButton(sender: UIButton!) {
         let masterCenter = masterButton.center
