@@ -47,6 +47,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     var timeTillNextUpdate: Double?
     //var nextUpdateTime: String? //use for making 4 min till end
     var timeTillNextClass: Double?
+    var iconsList: [UIImage]?
     
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var scheduleDiscriptorLabel: UILabel!
@@ -59,6 +60,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         scheduleCollectionView.delegate = self
         scheduleCollectionView.dataSource = self
         buttonSetup()
+      //  addIcons()
         addButtonsToArray()
         //upcomingDates.delegate = self
        // upcomingDates.dataSource = self
@@ -84,6 +86,15 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         super.viewWillAppear(true)
         loadSchedule()
     }
+    
+    func addIcons(){
+        iconsList?.append(UIImage(named: "ellipsis")!)
+        iconsList?.append(UIImage(named: "gear")!)
+        iconsList?.append(UIImage(named: "bell")!)
+        iconsList?.append(UIImage(named: "calendar")!)
+        print(iconsList)
+    }
+    
     
     func buttonSetup(){
         masterButton.backgroundColor = UIColor(hue: 205/360.0, saturation: 0.83, brightness: 0.84, alpha: 1)
@@ -113,6 +124,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         
         for button in collapsingButtonArray{
             button.backgroundColor = color
+           // button.imageView?.image = iconsList![button.tag + 1]
             button.layer.cornerRadius = 25
             button.addTarget(self, action: #selector(subButton), for: .touchUpInside)
             button.addTarget(self, action: #selector(holdDownSub), for: .touchDown)
