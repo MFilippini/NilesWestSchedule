@@ -60,7 +60,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         scheduleCollectionView.delegate = self
         scheduleCollectionView.dataSource = self
         buttonSetup()
-      //  addIcons()
+        addIcons()
         addButtonsToArray()
         //upcomingDates.delegate = self
        // upcomingDates.dataSource = self
@@ -124,7 +124,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         
         for button in collapsingButtonArray{
             button.backgroundColor = color
-           // button.imageView?.image = iconsList![button.tag + 1]
+            //button.imageView?.image = iconsList![button.tag + 1]
             button.layer.cornerRadius = 25
             button.addTarget(self, action: #selector(subButton), for: .touchUpInside)
             button.addTarget(self, action: #selector(holdDownSub), for: .touchDown)
