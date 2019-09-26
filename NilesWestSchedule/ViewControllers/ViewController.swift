@@ -59,9 +59,10 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         ref = Database.database().reference()
         scheduleCollectionView.delegate = self
         scheduleCollectionView.dataSource = self
+        addIcons()
         buttonSetup()
-      //  addIcons()
         addButtonsToArray()
+        
         //upcomingDates.delegate = self
        // upcomingDates.dataSource = self
 //        scheduleCollectionView.layer.cornerRadius = 7
@@ -74,10 +75,10 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         
         for family: String in UIFont.familyNames
         {
-            print(family)
+          //  print(family)
             for names: String in UIFont.fontNames(forFamilyName: family)
             {
-                print("== \(names)")
+                //print("== \(names)")
             }
         }
     }
@@ -88,16 +89,27 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     }
     
     func addIcons(){
-        iconsList?.append(UIImage(named: "ellipsis")!)
-        iconsList?.append(UIImage(named: "gear")!)
-        iconsList?.append(UIImage(named: "bell")!)
-        iconsList?.append(UIImage(named: "calendar")!)
-        print(iconsList)
+        if #available(iOS 13.0, *) {
+            let cal = UIImage(systemName: "calendar")!
+            let gear = UIImage(systemName: "gear")!
+            let bell = UIImage(systemName: "bell")!
+            
+            self.iconsList? = [cal,gear,bell]
+            print(iconsList)
+//            iconsList?.append(UIImage(systemName: "calendar")!
+//            iconsList?.append(UIImage(systemName: "gear")!)
+//            iconsList?.append(UIImage(systemName: "bell")!)
+//            iconsList?.append(UIImage(systemName: "ellipsis")!)
+        } else {
+            // Fallback on earlier versions
+        }
+        print("icons:\(iconsList)")
     }
     
     
     func buttonSetup(){
         masterButton.backgroundColor = UIColor(hue: 205/360.0, saturation: 0.83, brightness: 0.84, alpha: 1)
+        masterButton.setImage(UIImage(systemName: "ellipsis"), for: .normal)
         masterButton.layer.cornerRadius = 27
         buttonDirection = true
         masterButton.addTarget(self, action: #selector(expandButton), for: .touchUpInside)
@@ -124,7 +136,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         
         for button in collapsingButtonArray{
             button.backgroundColor = color
-           // button.imageView?.image = iconsList![button.tag + 1]
+            button.setImage(UIImage(systemName: "calendar"), for: .normal)
             button.layer.cornerRadius = 25
             button.addTarget(self, action: #selector(subButton), for: .touchUpInside)
             button.addTarget(self, action: #selector(holdDownSub), for: .touchDown)
@@ -156,6 +168,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             sender.transform = CGAffineTransform.identity
             sender.backgroundColor = UIColor(hue: 149/360.0, saturation: 0.82, brightness: 0.84, alpha: 1)
         }
+        
+        performSegue(withIdentifier: "toUpcomingSegue", sender: nil)
     }
 
     @objc func cancelHoldSub(sender: UIButton){

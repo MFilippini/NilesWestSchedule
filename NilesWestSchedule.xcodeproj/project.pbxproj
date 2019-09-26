@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		49585838233A9EA40008F0B9 /* UpcomingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49585837233A9EA40008F0B9 /* UpcomingViewController.swift */; };
 		49B5580F230B2C250038C08E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 49B5580E230B2C250038C08E /* GoogleService-Info.plist */; };
 		49BDC96F230B2A0A00BCC96D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49BDC96E230B2A0A00BCC96D /* AppDelegate.swift */; };
 		49BDC971230B2A0A00BCC96D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49BDC970230B2A0A00BCC96D /* ViewController.swift */; };
@@ -28,6 +29,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		49585837233A9EA40008F0B9 /* UpcomingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpcomingViewController.swift; sourceTree = "<group>"; };
 		49B5580E230B2C250038C08E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		49BDC96B230B2A0A00BCC96D /* NilesWestSchedule.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NilesWestSchedule.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		49BDC96E230B2A0A00BCC96D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -64,6 +66,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		49585839233A9EB80008F0B9 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				49BDC970230B2A0A00BCC96D /* ViewController.swift */,
+				49585837233A9EA40008F0B9 /* UpcomingViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
 		49BDC962230B2A0A00BCC96D = {
 			isa = PBXGroup;
 			children = (
@@ -85,9 +96,9 @@
 		49BDC96D230B2A0A00BCC96D /* NilesWestSchedule */ = {
 			isa = PBXGroup;
 			children = (
-				49BDC96E230B2A0A00BCC96D /* AppDelegate.swift */,
-				49BDC970230B2A0A00BCC96D /* ViewController.swift */,
 				49BDC972230B2A0A00BCC96D /* Main.storyboard */,
+				49BDC96E230B2A0A00BCC96D /* AppDelegate.swift */,
+				49585839233A9EB80008F0B9 /* ViewControllers */,
 				4A024320232196460058B66E /* UpcomingCell.swift */,
 				4AEAAFDA230F202100FAC1A5 /* TestCollectionViewCell.swift */,
 				49BDC975230B2A0C00BCC96D /* Assets.xcassets */,
@@ -269,6 +280,7 @@
 				4AEAAFDB230F202100FAC1A5 /* TestCollectionViewCell.swift in Sources */,
 				49BDC971230B2A0A00BCC96D /* ViewController.swift in Sources */,
 				49BDC96F230B2A0A00BCC96D /* AppDelegate.swift in Sources */,
+				49585838233A9EA40008F0B9 /* UpcomingViewController.swift in Sources */,
 				4A024321232196460058B66E /* UpcomingCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -417,13 +429,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 5AM4378YJ3;
+				DEVELOPMENT_TEAM = 4A8MPXMBPS;
 				INFOPLIST_FILE = NilesWestSchedule/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "Michael-F.NilesWestSchedule1";
+				PRODUCT_BUNDLE_IDENTIFIER = "Michael-F.NilesWestSchedule";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -436,13 +449,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 5AM4378YJ3;
+				DEVELOPMENT_TEAM = 4A8MPXMBPS;
 				INFOPLIST_FILE = NilesWestSchedule/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "Michael-F.NilesWestSchedule1";
+				PRODUCT_BUNDLE_IDENTIFIER = "Michael-F.NilesWestSchedule";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
