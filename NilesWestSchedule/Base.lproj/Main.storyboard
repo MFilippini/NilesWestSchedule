@@ -82,13 +82,12 @@
                                 <color key="textColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.23529411759999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="csx-X4-baA">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="csx-X4-baA">
                                 <rect key="frame" x="340" y="808" width="54" height="54"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="54" id="gSr-T4-kyx"/>
                                     <constraint firstAttribute="height" constant="54" id="lKF-ez-XJ3"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="49"/>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -99,6 +98,7 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Item" id="Ruh-KM-133"/>
+                    <navigationItem key="navigationItem" id="XLu-Yn-9cD"/>
                     <connections>
                         <outlet property="dateLabel" destination="Uvw-ae-0mC" id="88q-dk-3eX"/>
                         <outlet property="masterButton" destination="csx-X4-baA" id="IXr-Z6-ZAS"/>
@@ -119,20 +119,29 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nl5-j5-yFy">
-                                <rect key="frame" x="118" y="433" width="178" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nl5-j5-yFy">
+                                <rect key="frame" x="172" y="437" width="113" height="22"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
+                                <state key="normal" title="Button" image="calendar"/>
+                                <connections>
+                                    <action selector="segueWithButton:" destination="g1c-0e-PCq" eventType="touchUpInside" id="rsh-aY-t6b"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="LG6-Q8-wqP"/>
                     </view>
                     <navigationItem key="navigationItem" id="OOk-QV-W4q"/>
+                    <connections>
+                        <outlet property="segueButton" destination="Nl5-j5-yFy" id="mmh-bv-eMq"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ouU-Lu-Vn7" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2063.768115942029" y="-45.535714285714285"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="calendar" width="17" height="16"/>
+    </resources>
 </document>
