@@ -2,9 +2,9 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -88,6 +88,7 @@
                                     <constraint firstAttribute="width" constant="54" id="gSr-T4-kyx"/>
                                     <constraint firstAttribute="height" constant="54" id="lKF-ez-XJ3"/>
                                 </constraints>
+                                <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -105,11 +106,29 @@
                         <outlet property="scheduleCollectionView" destination="bWz-wX-fGB" id="IFR-n5-JLD"/>
                         <outlet property="scheduleDiscriptorLabel" destination="Nf4-8P-Bk0" id="5Sd-Rq-c6z"/>
                         <segue destination="g1c-0e-PCq" kind="show" identifier="toUpcomingSegue" id="FF5-06-X1q"/>
+                        <segue destination="Gzv-vB-RNe" kind="show" identifier="toSettingsSegue" id="iq4-5c-IMU"/>
+                        <segue destination="UcQ-4k-Bbn" kind="show" identifier="toNotificationsSegue" id="71b-rV-O8m"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1047.8260869565217" y="75"/>
+        </scene>
+        <!--Settings View Controller-->
+        <scene sceneID="gRO-rM-vOg">
+            <objects>
+                <viewController id="Gzv-vB-RNe" customClass="SettingsViewController" customModule="NilesWestSchedule" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="AzM-y6-jzF">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="Wiu-nf-T42"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="SRQ-Zc-YOZ"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="aKz-uF-h7u" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2064" y="-735"/>
         </scene>
         <!--Upcoming View Controller-->
         <scene sceneID="fsF-BM-xaR">
@@ -119,29 +138,78 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nl5-j5-yFy">
-                                <rect key="frame" x="172" y="437" width="113" height="22"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button" image="calendar"/>
-                                <connections>
-                                    <action selector="segueWithButton:" destination="g1c-0e-PCq" eventType="touchUpInside" id="rsh-aY-t6b"/>
-                                </connections>
-                            </button>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="QVa-57-haa">
+                                <rect key="frame" x="20" y="148" width="374" height="660"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="25" id="JRS-DE-gl3">
+                                    <size key="itemSize" width="360" height="102"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="upcomingCell" id="D1l-mp-v0P" customClass="UpcomingCell" customModule="NilesWestSchedule" customModuleProvider="target">
+                                        <rect key="frame" x="7" y="0.0" width="360" height="102"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="YYk-oW-bre">
+                                            <rect key="frame" x="0.0" y="0.0" width="360" height="102"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="dateLabel" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hKB-9H-xKg">
+                                                    <rect key="frame" x="8" y="8" width="344" height="86"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="41"/>
+                                                    <color key="textColor" systemColor="systemGreenColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="hKB-9H-xKg" secondAttribute="trailing" constant="8" id="1dL-XS-TdF"/>
+                                                <constraint firstItem="hKB-9H-xKg" firstAttribute="top" secondItem="YYk-oW-bre" secondAttribute="top" constant="8" id="WrO-df-auG"/>
+                                                <constraint firstItem="hKB-9H-xKg" firstAttribute="leading" secondItem="YYk-oW-bre" secondAttribute="leading" constant="8" id="d83-EY-lq7"/>
+                                                <constraint firstAttribute="bottom" secondItem="hKB-9H-xKg" secondAttribute="bottom" constant="8" id="iMO-Xg-ByO"/>
+                                            </constraints>
+                                        </collectionViewCellContentView>
+                                        <size key="customSize" width="360" height="102"/>
+                                        <connections>
+                                            <outlet property="dateLabel" destination="hKB-9H-xKg" id="Vw0-S2-ZpG"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="QVa-57-haa" firstAttribute="top" secondItem="LG6-Q8-wqP" secondAttribute="top" constant="148" id="St3-lF-J2W"/>
+                            <constraint firstItem="QVa-57-haa" firstAttribute="trailing" secondItem="2pb-MA-lLh" secondAttribute="trailingMargin" id="jf7-e4-ed4"/>
+                            <constraint firstItem="QVa-57-haa" firstAttribute="bottom" secondItem="LG6-Q8-wqP" secondAttribute="bottom" id="ogK-t0-6fn"/>
+                            <constraint firstItem="QVa-57-haa" firstAttribute="leading" secondItem="2pb-MA-lLh" secondAttribute="leadingMargin" id="tT5-W7-ink"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="LG6-Q8-wqP"/>
                     </view>
                     <navigationItem key="navigationItem" id="OOk-QV-W4q"/>
                     <connections>
-                        <outlet property="segueButton" destination="Nl5-j5-yFy" id="mmh-bv-eMq"/>
+                        <outlet property="upcomingCollectionView" destination="QVa-57-haa" id="bEe-uS-SpU"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ouU-Lu-Vn7" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2063.768115942029" y="-45.535714285714285"/>
         </scene>
+        <!--Notifications View Controller-->
+        <scene sceneID="zgh-Xk-7s3">
+            <objects>
+                <viewController id="UcQ-4k-Bbn" customClass="NotificationsViewController" customModule="NilesWestSchedule" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="NCB-1u-P3B">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="L3A-1R-j8A"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="VQg-94-pHF"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="kq2-Op-Xh6" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2064" y="661"/>
+        </scene>
     </scenes>
-    <resources>
-        <image name="calendar" width="17" height="16"/>
-    </resources>
 </document>

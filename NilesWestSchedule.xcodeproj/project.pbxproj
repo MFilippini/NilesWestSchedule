@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		49585838233A9EA40008F0B9 /* UpcomingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49585837233A9EA40008F0B9 /* UpcomingViewController.swift */; };
 		49B5580F230B2C250038C08E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 49B5580E230B2C250038C08E /* GoogleService-Info.plist */; };
+		49B84A55233D4C0F002C01B4 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B84A54233D4C0F002C01B4 /* SettingsViewController.swift */; };
+		49B84A57233D4C5B002C01B4 /* NotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B84A56233D4C5B002C01B4 /* NotificationsViewController.swift */; };
 		49BDC96F230B2A0A00BCC96D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49BDC96E230B2A0A00BCC96D /* AppDelegate.swift */; };
 		49BDC971230B2A0A00BCC96D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49BDC970230B2A0A00BCC96D /* ViewController.swift */; };
 		49BDC974230B2A0A00BCC96D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 49BDC972230B2A0A00BCC96D /* Main.storyboard */; };
@@ -31,6 +33,8 @@
 /* Begin PBXFileReference section */
 		49585837233A9EA40008F0B9 /* UpcomingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpcomingViewController.swift; sourceTree = "<group>"; };
 		49B5580E230B2C250038C08E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		49B84A54233D4C0F002C01B4 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		49B84A56233D4C5B002C01B4 /* NotificationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsViewController.swift; sourceTree = "<group>"; };
 		49BDC96B230B2A0A00BCC96D /* NilesWestSchedule.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NilesWestSchedule.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		49BDC96E230B2A0A00BCC96D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		49BDC970230B2A0A00BCC96D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -71,6 +75,8 @@
 			children = (
 				49BDC970230B2A0A00BCC96D /* ViewController.swift */,
 				49585837233A9EA40008F0B9 /* UpcomingViewController.swift */,
+				49B84A54233D4C0F002C01B4 /* SettingsViewController.swift */,
+				49B84A56233D4C5B002C01B4 /* NotificationsViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -282,6 +288,8 @@
 				49BDC96F230B2A0A00BCC96D /* AppDelegate.swift in Sources */,
 				49585838233A9EA40008F0B9 /* UpcomingViewController.swift in Sources */,
 				4A024321232196460058B66E /* UpcomingCell.swift in Sources */,
+				49B84A57233D4C5B002C01B4 /* NotificationsViewController.swift in Sources */,
+				49B84A55233D4C0F002C01B4 /* SettingsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
