@@ -47,7 +47,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     var timeTillNextUpdate: Double?
     //var nextUpdateTime: String? //use for making 4 min till end
     var timeTillNextClass: Double?
-    var iconsList: [UIImage]?
+    var iconsList: [UIImage] = []
     
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var scheduleDiscriptorLabel: UILabel!
@@ -62,9 +62,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         addIcons()
         buttonSetup()
         addButtonsToArray()
-        
-        //upcomingDates.delegate = self
-       // upcomingDates.dataSource = self
+
 //        scheduleCollectionView.layer.cornerRadius = 7
 //        scheduleCollectionView.layer.shadowColor = UIColor.gray.cgColor
 //        scheduleCollectionView.layer.shadowOffset = CGSize(width: 0, height: 1.2)
@@ -88,18 +86,18 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         loadSchedule()
     }
     
+    // MARK: Buttons
+
     func addIcons(){
         if #available(iOS 13.0, *) {
-            let cal = UIImage(systemName: "calendar")!
-            let gear = UIImage(systemName: "gear")!
-            let bell = UIImage(systemName: "bell")!
             
-            self.iconsList? = [cal,gear,bell]
-            print(iconsList)
-//            iconsList?.append(UIImage(systemName: "calendar")!
-//            iconsList?.append(UIImage(systemName: "gear")!)
-//            iconsList?.append(UIImage(systemName: "bell")!)
-//            iconsList?.append(UIImage(systemName: "ellipsis")!)
+            let config = UIImage.SymbolConfiguration(pointSize: 20, weight: .semibold, scale: .large)
+            
+            let cal = UIImage(systemName: "calendar", withConfiguration: config)!
+            let gear = UIImage(systemName: "gear", withConfiguration: config)!
+            let bell = UIImage(systemName: "bell", withConfiguration: config)!
+            
+            self.iconsList = [cal,gear,bell]
         } else {
             // Fallback on earlier versions
         }
@@ -109,7 +107,9 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     func buttonSetup(){
         masterButton.backgroundColor = UIColor(hue: 205/360.0, saturation: 0.83, brightness: 0.84, alpha: 1)
-        masterButton.setImage(UIImage(systemName: "ellipsis"), for: .normal)
+        let config = UIImage.SymbolConfiguration(pointSize: 20, weight: .semibold, scale: .large)
+
+        masterButton.setImage(UIImage(systemName: "ellipsis", withConfiguration: config), for: .normal)
         masterButton.layer.cornerRadius = 27
         buttonDirection = true
         masterButton.addTarget(self, action: #selector(expandButton), for: .touchUpInside)
@@ -136,7 +136,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         
         for button in collapsingButtonArray{
             button.backgroundColor = color
-            button.setImage(UIImage(systemName: "calendar"), for: .normal)
+            button.tintColor = .black
+            button.setImage(iconsList[button.tag], for: .normal)
             button.layer.cornerRadius = 25
             button.addTarget(self, action: #selector(subButton), for: .touchUpInside)
             button.addTarget(self, action: #selector(holdDownSub), for: .touchDown)
@@ -146,6 +147,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     }
 
     @objc func holdDownMaster(sender: UIButton){
+        UIImpactFeedbackGenerator().impactOccurred(intensity: 0.7)
+
         UIView.animate(withDuration: 0.02,
             animations: {
                 sender.transform = CGAffineTransform(scaleX: 0.85, y: 0.85)
@@ -155,6 +158,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     
     @objc func holdDownSub(sender: UIButton){
+        UIImpactFeedbackGenerator().impactOccurred(intensity: 0.7)
+
         UIView.animate(withDuration: 0.05,
             animations: {
                 sender.transform = CGAffineTransform(scaleX: 0.85, y: 0.85)
@@ -163,13 +168,26 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     }
     
     @objc func subButton(sender: UIButton){
+        UIImpactFeedbackGenerator().impactOccurred(intensity: 0.9)
+
         print(sender.tag)
         UIView.animate(withDuration: 0.05) {
             sender.transform = CGAffineTransform.identity
             sender.backgroundColor = UIColor(hue: 149/360.0, saturation: 0.82, brightness: 0.84, alpha: 1)
         }
         
-        performSegue(withIdentifier: "toUpcomingSegue", sender: nil)
+        
+        //[cal,gear,bell]
+        if(sender.tag == 0){
+            performSegue(withIdentifier: "toUpcomingSegue", sender: nil)
+        }
+        else if(sender.tag == 1){
+            performSegue(withIdentifier: "toSettingsSegue", sender: nil)
+
+        }else{
+            performSegue(withIdentifier: "toNotificationsSegue", sender: nil)
+        }
+        
     }
 
     @objc func cancelHoldSub(sender: UIButton){
@@ -191,6 +209,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         let masterCenter = masterButton.center
         let masterCenterX = masterButton.center.x
         let masterCenterY = masterButton.center.y
+        UIImpactFeedbackGenerator().impactOccurred(intensity: 0.9)
 
         UIView.animate(withDuration: 0.02) {
             sender.transform = CGAffineTransform.identity
@@ -226,6 +245,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         buttonDirection = !(buttonDirection!)
     }
     
+    // MARK: Database
+
     func loadSchedule(){
         dailyScheduleTemp.removeAll()
         usersScheduleTemp.removeAll()
@@ -440,7 +461,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     }
     
     
-    
+    // MARK: Collection Views
+
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == scheduleCollectionView {
             return usersSchedule.count
@@ -454,6 +476,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         if collectionView == scheduleCollectionView {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! TestCollectionViewCell
             cell.backgroundColor = .clear
+            
             let colorTop = UIColor(red: 203.0/255.0, green: 45.0/255.0, blue: 62.0/255.0, alpha: 1.0).cgColor
             let colorBottom = UIColor(red: 239.0/255.0, green: 71.0/255.0, blue: 58.0/255.0, alpha: 1.0).cgColor
         
@@ -484,6 +507,29 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         }
 
     }
+    
+    // MARK: Seuge
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let masterCenter = masterButton.center
+        let masterCenterX = masterButton.center.x
+        let masterCenterY = masterButton.center.y
+        
+        if(!buttonDirection!){
+            UIView.animate(withDuration: 0.2, animations: {
+                
+                collapsingButtonArray[0].center = masterCenter
+                collapsingButtonArray[1].center = masterCenter
+                collapsingButtonArray[2].center = masterCenter
+                
+            }, completion: { (finished: Bool) in
+                for button in collapsingButtonArray{
+                    button.removeFromSuperview()
+                }
+            })
+            buttonDirection = !(buttonDirection!)
+        }
+    }
+    
     
 }
 
