@@ -22,14 +22,15 @@
 	<true/>
 	<key>UIAppFonts</key>
 	<array>
-		<string>Raleway-Thin.ttf</string>
-		<string>Raleway-SemiBold.ttf</string>
-		<string>Raleway-Regular.ttf</string>
-		<string>Raleway-Medium.ttf</string>
-		<string>Raleway-Light.ttf</string>
-		<string>Raleway-ExtraBold.ttf</string>
-		<string>Raleway-Bold.ttf</string>
-		<string>Raleway-Black.ttf</string>
+		<string>SF-Pro-Rounded-Bold.otf</string>
+		<string>SF-Pro-Rounded-Black.otf</string>
+		<string>SF-Pro-Rounded-Heavy.otf</string>
+		<string>SF-Pro-Rounded-Light.otf</string>
+		<string>SF-Pro-Rounded-Medium.otf</string>
+		<string>SF-Pro-Rounded-Regular.otf</string>
+		<string>SF-Pro-Rounded-Semibold.otf</string>
+		<string>SF-Pro-Rounded-Thin.otf</string>
+		<string>SF-Pro-Rounded-Ultralight.otf</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
