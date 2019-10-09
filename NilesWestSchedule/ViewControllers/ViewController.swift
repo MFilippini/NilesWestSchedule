@@ -59,6 +59,13 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         ref = Database.database().reference()
         scheduleCollectionView.delegate = self
         scheduleCollectionView.dataSource = self
+        
+        //change date
+        let formater = DateFormatter()
+        formater.dateFormat = "EEEE, M/d"
+        dateLabel.text = formater.string(from: Date())
+
+        
         addIcons()
         buttonSetup()
         addButtonsToArray()
@@ -248,6 +255,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     // MARK: Database
 
     func loadSchedule(){
+        print("Load Schedule")
         dailyScheduleTemp.removeAll()
         usersScheduleTemp.removeAll()
         upcomingSpecialDaysTemp.removeAll()
@@ -398,26 +406,52 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                 let secPassed = Double(formaterSec.string(from: Date())) ?? 0
                 self?.timeTillNextUpdate = 60 - secPassed
                 
-                
                 if(usersSchedule[0][3] as? Double ?? 0 >= currentTime){
+                    
+                    //change date
+                    let formater = DateFormatter()
+                    formater.dateFormat = "EEEE, M/d"
+                    
+                    DispatchQueue.main.async { [weak self] in
+                        self?.dateLabel.text = formater.string(from: Date())
+                    }
+                    
                     print("before school")
-                  //  self?.nextUpdateTime = "\(usersSchedule[0][3])"
+                    self?.setTimeToNextClass(endTime: "\(usersSchedule[0][3])")
+                    print("first Class at\(self?.timeTillNextClass)")
+                    self?.timeTillNextUpdate = self?.timeTillNextClass
                 }
                 else if(usersSchedule[usersSchedule.count - 1][4] as? Double ?? 0 <= currentTime){
                     print("school is over")
-                  //  self?.nextUpdateTime = "\(usersSchedule[0][3])"
+                    self?.setTimeToNextClass(endTime: "24.00")
+                    self?.timeTillNextUpdate = self?.timeTillNextClass
+
+                    print("next Update at end of day\(self?.timeTillNextClass)")
                 }else{
                     for period in usersSchedule{
                         // timeIndex 3
                         if(currentTime < (period[3] as? Double ?? 0) ){
                             self?.setTimeToNextClass(endTime: "\(period[3])")
+                            
+                            if((self?.timeTillNextClass as! Double) <= 60.0){
+                                  let formaterSec = DateFormatter()
+                                  formaterSec.dateFormat = "0.SSS"
+                                  let milSecPassed = Double(formaterSec.string(from: Date())) ?? 0
+                                  self?.timeTillNextUpdate = 1 - milSecPassed
+                            }
+                            
                             print("Time till period start: \(self?.timeTillNextClass!)")
-                            //self?.nextUpdateTime = "\(period[3])"
                             break
                         }else if(currentTime < (period[4] as? Double ?? 0) ){
                             self?.setTimeToNextClass(endTime: "\(period[4])")
                             print("Time till period end: \(self?.timeTillNextClass!)")
-                           // self?.nextUpdateTime = "\(period[4])"
+                            
+                            if((self?.timeTillNextClass as! Double) <= 60.0){
+                                let formaterSec = DateFormatter()
+                                formaterSec.dateFormat = "0.SSS"
+                                let milSecPassed = Double(formaterSec.string(from: Date())) ?? 0
+                                self?.timeTillNextUpdate = 1 - milSecPassed
+                            }
                             break
                         }
                     }
