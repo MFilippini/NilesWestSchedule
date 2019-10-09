@@ -500,6 +500,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == scheduleCollectionView {
             return usersSchedule.count
+        } else {
+            return upcomingSpecialDays.count
         }
         return upcomingSpecialDays.count
     }
@@ -534,6 +536,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             let cellText = "\(upcomingSpecialDays[indexPath.row][0]) \(upcomingSpecialDays[indexPath.row][1])"
             cell.dateLabel.text = cellText
             return cell
+
+
         }
 
     }

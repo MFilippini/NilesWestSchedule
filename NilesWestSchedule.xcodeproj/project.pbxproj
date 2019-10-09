@@ -26,6 +26,15 @@
 		4A1928A12315BB0E008E8D40 /* Raleway-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4A19288E2315BB01008E8D40 /* Raleway-Regular.ttf */; };
 		4A1928A32315BB0E008E8D40 /* Raleway-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4A1928942315BB03008E8D40 /* Raleway-SemiBold.ttf */; };
 		4A1928A52315BB0E008E8D40 /* Raleway-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4A1928902315BB02008E8D40 /* Raleway-Thin.ttf */; };
+		4A641BDD234D17B400D355AE /* SF-Pro-Rounded-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4A641BD8234D164C00D355AE /* SF-Pro-Rounded-Black.otf */; };
+		4A641BDE234D17B400D355AE /* SF-Pro-Rounded-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4A641BDB234D165000D355AE /* SF-Pro-Rounded-Bold.otf */; };
+		4A641BDF234D17B400D355AE /* SF-Pro-Rounded-Heavy.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4A641BD5234D164900D355AE /* SF-Pro-Rounded-Heavy.otf */; };
+		4A641BE0234D17B400D355AE /* SF-Pro-Rounded-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4A641BD7234D164B00D355AE /* SF-Pro-Rounded-Light.otf */; };
+		4A641BE1234D17B400D355AE /* SF-Pro-Rounded-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4A641BD3234D164700D355AE /* SF-Pro-Rounded-Medium.otf */; };
+		4A641BE2234D17B400D355AE /* SF-Pro-Rounded-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4A641BD4234D164800D355AE /* SF-Pro-Rounded-Regular.otf */; };
+		4A641BE3234D17B400D355AE /* SF-Pro-Rounded-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4A641BD6234D164A00D355AE /* SF-Pro-Rounded-Semibold.otf */; };
+		4A641BE4234D17B400D355AE /* SF-Pro-Rounded-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4A641BDA234D164F00D355AE /* SF-Pro-Rounded-Thin.otf */; };
+		4A641BE5234D17B400D355AE /* SF-Pro-Rounded-Ultralight.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4A641BD9234D164D00D355AE /* SF-Pro-Rounded-Ultralight.otf */; };
 		4AEAAFDB230F202100FAC1A5 /* TestCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AEAAFDA230F202100FAC1A5 /* TestCollectionViewCell.swift */; };
 		DA8BE4A7E1CC75D8A3638F19 /* Pods_NilesWestSchedule.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BC9E21947D4CBF29A53D385 /* Pods_NilesWestSchedule.framework */; };
 /* End PBXBuildFile section */
@@ -52,6 +61,15 @@
 		4A1928902315BB02008E8D40 /* Raleway-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Raleway-Thin.ttf"; sourceTree = "<group>"; };
 		4A1928922315BB02008E8D40 /* Raleway-ExtraBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Raleway-ExtraBold.ttf"; sourceTree = "<group>"; };
 		4A1928942315BB03008E8D40 /* Raleway-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Raleway-SemiBold.ttf"; sourceTree = "<group>"; };
+		4A641BD3234D164700D355AE /* SF-Pro-Rounded-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Rounded-Medium.otf"; sourceTree = "<group>"; };
+		4A641BD4234D164800D355AE /* SF-Pro-Rounded-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Rounded-Regular.otf"; sourceTree = "<group>"; };
+		4A641BD5234D164900D355AE /* SF-Pro-Rounded-Heavy.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Rounded-Heavy.otf"; sourceTree = "<group>"; };
+		4A641BD6234D164A00D355AE /* SF-Pro-Rounded-Semibold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Rounded-Semibold.otf"; sourceTree = "<group>"; };
+		4A641BD7234D164B00D355AE /* SF-Pro-Rounded-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Rounded-Light.otf"; sourceTree = "<group>"; };
+		4A641BD8234D164C00D355AE /* SF-Pro-Rounded-Black.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Rounded-Black.otf"; sourceTree = "<group>"; };
+		4A641BD9234D164D00D355AE /* SF-Pro-Rounded-Ultralight.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Rounded-Ultralight.otf"; sourceTree = "<group>"; };
+		4A641BDA234D164F00D355AE /* SF-Pro-Rounded-Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Rounded-Thin.otf"; sourceTree = "<group>"; };
+		4A641BDB234D165000D355AE /* SF-Pro-Rounded-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Rounded-Bold.otf"; sourceTree = "<group>"; };
 		4AEAAFDA230F202100FAC1A5 /* TestCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestCollectionViewCell.swift; sourceTree = "<group>"; };
 		4BC9E21947D4CBF29A53D385 /* Pods_NilesWestSchedule.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NilesWestSchedule.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B1E6144919F0D00B26EC1CE3 /* Pods-NilesWestSchedule.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NilesWestSchedule.debug.xcconfig"; path = "Target Support Files/Pods-NilesWestSchedule/Pods-NilesWestSchedule.debug.xcconfig"; sourceTree = "<group>"; };
@@ -111,6 +129,7 @@
 				49BDC977230B2A0C00BCC96D /* LaunchScreen.storyboard */,
 				49B5580E230B2C250038C08E /* GoogleService-Info.plist */,
 				49BDC97A230B2A0C00BCC96D /* Info.plist */,
+				4A641BDC234D170F00D355AE /* SF Pro */,
 				4A1928A62315BD2F008E8D40 /* Raleway */,
 			);
 			path = NilesWestSchedule;
@@ -130,6 +149,22 @@
 				4A1928902315BB02008E8D40 /* Raleway-Thin.ttf */,
 			);
 			path = Raleway;
+			sourceTree = "<group>";
+		};
+		4A641BDC234D170F00D355AE /* SF Pro */ = {
+			isa = PBXGroup;
+			children = (
+				4A641BD8234D164C00D355AE /* SF-Pro-Rounded-Black.otf */,
+				4A641BDB234D165000D355AE /* SF-Pro-Rounded-Bold.otf */,
+				4A641BD5234D164900D355AE /* SF-Pro-Rounded-Heavy.otf */,
+				4A641BD7234D164B00D355AE /* SF-Pro-Rounded-Light.otf */,
+				4A641BD3234D164700D355AE /* SF-Pro-Rounded-Medium.otf */,
+				4A641BD4234D164800D355AE /* SF-Pro-Rounded-Regular.otf */,
+				4A641BD6234D164A00D355AE /* SF-Pro-Rounded-Semibold.otf */,
+				4A641BDA234D164F00D355AE /* SF-Pro-Rounded-Thin.otf */,
+				4A641BD9234D164D00D355AE /* SF-Pro-Rounded-Ultralight.otf */,
+			);
+			path = "SF Pro";
 			sourceTree = "<group>";
 		};
 		4E7DA6709F33E2F452981135 /* Frameworks */ = {
@@ -213,15 +248,24 @@
 				4A19289F2315BB0E008E8D40 /* Raleway-Medium.ttf in Resources */,
 				4A19289D2315BB0E008E8D40 /* Raleway-Light.ttf in Resources */,
 				4A1928952315BB09008E8D40 /* Raleway-Black.ttf in Resources */,
+				4A641BE0234D17B400D355AE /* SF-Pro-Rounded-Light.otf in Resources */,
 				4A1928A32315BB0E008E8D40 /* Raleway-SemiBold.ttf in Resources */,
 				49BDC976230B2A0C00BCC96D /* Assets.xcassets in Resources */,
 				49B5580F230B2C250038C08E /* GoogleService-Info.plist in Resources */,
 				4A1928992315BB0E008E8D40 /* Raleway-ExtraBold.ttf in Resources */,
+				4A641BE1234D17B400D355AE /* SF-Pro-Rounded-Medium.otf in Resources */,
 				4A19289B2315BB0E008E8D40 /* Raleway-ExtraLight.ttf in Resources */,
+				4A641BDE234D17B400D355AE /* SF-Pro-Rounded-Bold.otf in Resources */,
 				4A1928A12315BB0E008E8D40 /* Raleway-Regular.ttf in Resources */,
+				4A641BDD234D17B400D355AE /* SF-Pro-Rounded-Black.otf in Resources */,
+				4A641BE5234D17B400D355AE /* SF-Pro-Rounded-Ultralight.otf in Resources */,
 				49BDC974230B2A0A00BCC96D /* Main.storyboard in Resources */,
+				4A641BE4234D17B400D355AE /* SF-Pro-Rounded-Thin.otf in Resources */,
 				4A1928972315BB0E008E8D40 /* Raleway-Bold.ttf in Resources */,
+				4A641BE2234D17B400D355AE /* SF-Pro-Rounded-Regular.otf in Resources */,
+				4A641BDF234D17B400D355AE /* SF-Pro-Rounded-Heavy.otf in Resources */,
 				4A1928A52315BB0E008E8D40 /* Raleway-Thin.ttf in Resources */,
+				4A641BE3234D17B400D355AE /* SF-Pro-Rounded-Semibold.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
