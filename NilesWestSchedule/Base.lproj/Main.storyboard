@@ -59,8 +59,8 @@
                                             </subviews>
                                         </view>
                                         <connections>
-                                            <outlet property="endTime" destination="Cx2-Vx-Tfd" id="2VP-f8-J1B"/>
-                                            <outlet property="startTime" destination="TBI-OZ-Hmj" id="UP4-UB-SRM"/>
+                                            <outlet property="periodLabel" destination="TBI-OZ-Hmj" id="BH4-lQ-vb9"/>
+                                            <outlet property="timeLabel" destination="Cx2-Vx-Tfd" id="ZKV-ls-HUk"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
@@ -155,7 +155,7 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="dateLabel" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hKB-9H-xKg">
                                                     <rect key="frame" x="8" y="8" width="344" height="86"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="41"/>
-                                                    <color key="textColor" systemColor="systemGreenColor" red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="textColor" systemColor="systemGreenColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>

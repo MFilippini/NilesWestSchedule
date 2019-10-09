@@ -11,8 +11,8 @@ import UIKit
 class TestCollectionViewCell: UICollectionViewCell {
     
     
-    @IBOutlet weak var startTime: UILabel!
-    @IBOutlet weak var endTime: UILabel!
+    @IBOutlet weak var periodLabel: UILabel!
+    @IBOutlet weak var timeLabel: UILabel!
     
     
 }

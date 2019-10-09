@@ -45,9 +45,12 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     var ref: DatabaseReference!
     var update: DispatchWorkItem?
     var timeTillNextUpdate: Double?
-    //var nextUpdateTime: String? //use for making 4 min till end
     var timeTillNextClass: Double?
     var iconsList: [UIImage] = []
+    var currentPeriodIndex: Int?
+    var tillEndOfCurrentBool = true
+    
+    
     
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var scheduleDiscriptorLabel: UILabel!
@@ -360,7 +363,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                     
                     DispatchQueue.main.async { [weak self] in
                         self?.scheduleCollectionView.reloadData()
-                       // self?.upcomingDates.reloadData()
                         self?.scheduleDiscriptorLabel.text = scheduleName + " " + todaysDate
                     }
                     
@@ -407,7 +409,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                 self?.timeTillNextUpdate = 60 - secPassed
                 
                 if(usersSchedule[0][3] as? Double ?? 0 >= currentTime){
-                    
+                    self?.currentPeriodIndex = -1
+
                     //change date
                     let formater = DateFormatter()
                     formater.dateFormat = "EEEE, M/d"
@@ -418,7 +421,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                     
                     print("before school")
                     self?.setTimeToNextClass(endTime: "\(usersSchedule[0][3])")
-                    print("first Class at\(self?.timeTillNextClass)")
+                    print("first Class at\(self!.secondsToMinutes(seconds: self?.timeTillNextClass))")
                     
                     if((self?.timeTillNextClass as! Double) > 300.0){
                         // updates start again 5 minutes before class
@@ -433,20 +436,26 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                     self?.setTimeToNextClass(endTime: "24.00")
                     self?.timeTillNextUpdate = self?.timeTillNextClass
 
-                    print("next Update at end of day\(self?.timeTillNextClass)")
+                    print("next Update at end of day\(self!.secondsToMinutes(seconds: self?.timeTillNextClass))")
                 }else{
-                    for period in usersSchedule{
+                    for i in 0..<usersSchedule.count{
+                        let period = usersSchedule[i]
+                        self?.currentPeriodIndex = i
                         // timeIndex 3
                         if(currentTime < (period[3] as? Double ?? 0) ){
-                            
-                            print("Time till period start: \(self?.timeTillNextClass!)")
+                            self?.tillEndOfCurrentBool = false
+                            self?.setTimeToNextClass(endTime: "\(period[3])")
+                            print("Time till period start: \(self!.secondsToMinutes(seconds: self?.timeTillNextClass!))")
                             break
                         }else if(currentTime < (period[4] as? Double ?? 0) ){
+                            self?.tillEndOfCurrentBool = true
                             self?.setTimeToNextClass(endTime: "\(period[4])")
-                            print("Time till period end: \(self?.timeTillNextClass!)")
-                        
+                            print("Time till period end: \(self!.secondsToMinutes(seconds: self?.timeTillNextClass!))")
                             break
                         }
+                    }
+                    DispatchQueue.main.async { [weak self] in
+                        self?.scheduleCollectionView.reloadData()
                     }
                 }
             }
@@ -464,6 +473,17 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         
         DispatchQueue.global(qos: .utility).asyncAfter(deadline: .now() + abs(timeTillNextUpdate!),execute: update!)
     }
+    
+    func secondsToMinutes(seconds: Double?) -> String{
+        let seconds = seconds ?? 0
+        let minutes = seconds/60
+        let numFormatter = NumberFormatter()
+        numFormatter.roundingMode = .up
+        numFormatter.maximumFractionDigits = 0
+        
+        return numFormatter.string(from: minutes as NSNumber) ?? "error"
+    }
+    
     
     func setTimeToNextClass (endTime: String){
         let formater = DateFormatter()
@@ -500,38 +520,43 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if collectionView == scheduleCollectionView {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! TestCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! TestCollectionViewCell
             cell.backgroundColor = .clear
             
-            let colorTop = UIColor(red: 203.0/255.0, green: 45.0/255.0, blue: 62.0/255.0, alpha: 1.0).cgColor
-            let colorBottom = UIColor(red: 239.0/255.0, green: 71.0/255.0, blue: 58.0/255.0, alpha: 1.0).cgColor
+        let colorTop = UIColor(red: 203.0/255.0, green: 45.0/255.0, blue: 62.0/255.0, alpha: 1.0).cgColor
+        let colorBottom = UIColor(red: 239.0/255.0, green: 71.0/255.0, blue: 58.0/255.0, alpha: 1.0).cgColor
         
     //        let gradient = CAGradientLayer()
     //        gradient.colors = [colorTop, colorBottom]
     //        gradient.locations = [0.0, 1.0]
     //        gradient.frame = cell.bounds
     //        cell.layer.insertSublayer(gradient, at: 0)
-            cell.layer.cornerRadius = 7
-            cell.layer.shadowColor = UIColor.gray.cgColor
-            cell.layer.shadowOffset = CGSize(width: 0, height: 1.2)
-            cell.layer.shadowRadius = 1.2
-            cell.layer.shadowOpacity = 1.0
-            cell.layer.masksToBounds = false
-            cell.layer.shadowPath = UIBezierPath(roundedRect:cell.bounds, cornerRadius: 16).cgPath
-            cell.layer.cornerRadius = 16
-            cell.backgroundColor = .white
-            cell.startTime.text = usersSchedule[indexPath.row][0] as? String
-            cell.endTime.text = String(usersSchedule[indexPath.row][1] as? String ?? "e") + " - " + String(usersSchedule[indexPath.row][2] as? String ?? "w")
-            return cell
-        } else {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "upcomingCell", for: indexPath) as! UpcomingCell
-            let cellText = "\(upcomingSpecialDays[indexPath.row][0]) \(upcomingSpecialDays[indexPath.row][1])"
-            cell.dateLabel.text = cellText
-            return cell
-
-
+        cell.layer.cornerRadius = 7
+        cell.layer.shadowColor = UIColor.gray.cgColor
+        cell.layer.shadowOffset = CGSize(width: 0, height: 1.2)
+        cell.layer.shadowRadius = 1.2
+        cell.layer.shadowOpacity = 1.0
+        cell.layer.masksToBounds = false
+        cell.layer.shadowPath = UIBezierPath(roundedRect:cell.bounds, cornerRadius: 16).cgPath
+        cell.layer.cornerRadius = 16
+        cell.backgroundColor = .white
+        cell.periodLabel.text = usersSchedule[indexPath.row][0] as? String
+    
+        
+        if((self.currentPeriodIndex ?? -1) == indexPath.row){
+            var ender = ""
+            if(tillEndOfCurrentBool){
+                ender = " Minutes Left"
+            }else{
+                ender = " Minutes Till Start"
+            }
+            cell.timeLabel.text = secondsToMinutes(seconds: self.timeTillNextClass ?? -1) + ender
+        }else{
+            cell.timeLabel.text = String(usersSchedule[indexPath.row][1] as? String ?? "e") + " - " + String(usersSchedule[indexPath.row][2] as? String ?? "w")
         }
+        
+        
+            return cell
 
     }
     
