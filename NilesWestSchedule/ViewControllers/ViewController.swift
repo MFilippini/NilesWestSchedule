@@ -419,7 +419,14 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                     print("before school")
                     self?.setTimeToNextClass(endTime: "\(usersSchedule[0][3])")
                     print("first Class at\(self?.timeTillNextClass)")
-                    self?.timeTillNextUpdate = self?.timeTillNextClass
+                    
+                    if((self?.timeTillNextClass as! Double) > 300.0){
+                        // updates start again 5 minutes before class
+                        self?.timeTillNextUpdate = (self!.timeTillNextClass! - 300.0)
+                    }else{
+                        //every minute updates
+                        //display minutes to class start
+                    }
                 }
                 else if(usersSchedule[usersSchedule.count - 1][4] as? Double ?? 0 <= currentTime){
                     print("school is over")
@@ -431,27 +438,13 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                     for period in usersSchedule{
                         // timeIndex 3
                         if(currentTime < (period[3] as? Double ?? 0) ){
-                            self?.setTimeToNextClass(endTime: "\(period[3])")
-                            
-                            if((self?.timeTillNextClass as! Double) <= 60.0){
-                                  let formaterSec = DateFormatter()
-                                  formaterSec.dateFormat = "0.SSS"
-                                  let milSecPassed = Double(formaterSec.string(from: Date())) ?? 0
-                                  self?.timeTillNextUpdate = 1 - milSecPassed
-                            }
                             
                             print("Time till period start: \(self?.timeTillNextClass!)")
                             break
                         }else if(currentTime < (period[4] as? Double ?? 0) ){
                             self?.setTimeToNextClass(endTime: "\(period[4])")
                             print("Time till period end: \(self?.timeTillNextClass!)")
-                            
-                            if((self?.timeTillNextClass as! Double) <= 60.0){
-                                let formaterSec = DateFormatter()
-                                formaterSec.dateFormat = "0.SSS"
-                                let milSecPassed = Double(formaterSec.string(from: Date())) ?? 0
-                                self?.timeTillNextUpdate = 1 - milSecPassed
-                            }
+                        
                             break
                         }
                     }
