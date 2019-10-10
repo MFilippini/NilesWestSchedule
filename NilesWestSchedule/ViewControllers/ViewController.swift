@@ -81,14 +81,14 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
 //        scheduleCollectionView.layer.masksToBounds = false
 //        scheduleCollectionView.layer.shadowPath = UIBezierPath(roundedRect:scheduleCollectionView.bounds, cornerRadius: 7).cgPath
         
-        for family: String in UIFont.familyNames
-        {
-          //  print(family)
-            for names: String in UIFont.fontNames(forFamilyName: family)
-            {
-                //print("== \(names)")
-            }
-        }
+//        for family: String in UIFont.familyNames
+//        {
+//          //  print(family)
+//            for names: String in UIFont.fontNames(forFamilyName: family)
+//            {
+//                //print("== \(names)")
+//            }
+//        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -454,9 +454,9 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                             break
                         }
                     }
-                    DispatchQueue.main.async { [weak self] in
-                        self?.scheduleCollectionView.reloadData()
-                    }
+                }
+                DispatchQueue.main.async { [weak self] in
+                    self?.scheduleCollectionView.reloadData()
                 }
             }
             self?.scheduleNewUpdate()
@@ -581,7 +581,5 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             buttonDirection = !(buttonDirection!)
         }
     }
-    
-    
 }
 
