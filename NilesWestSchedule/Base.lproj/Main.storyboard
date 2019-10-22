@@ -11,9 +11,6 @@
         <array key="SF-Pro-Rounded-Bold.otf">
             <string>SFProRounded-Bold</string>
         </array>
-        <array key="SF-Pro-Rounded-Heavy.otf">
-            <string>SFProRounded-Heavy</string>
-        </array>
     </customFonts>
     <scenes>
         <!--Item-->
@@ -25,14 +22,14 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="bWz-wX-fGB">
-                                <rect key="frame" x="0.0" y="158" width="414" height="704"/>
+                                <rect key="frame" x="0.0" y="44" width="414" height="852"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="1Gf-xl-gL2">
                                     <size key="itemSize" width="374" height="90"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                    <inset key="sectionInset" minX="0.0" minY="10" maxX="0.0" maxY="59"/>
+                                    <inset key="sectionInset" minX="0.0" minY="10" maxX="0.0" maxY="10"/>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cell" id="2sR-vl-rb6" customClass="TestCollectionViewCell" customModule="NilesWestSchedule" customModuleProvider="target">
@@ -65,20 +62,6 @@
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Wendsday, 8/22" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Uvw-ae-0mC">
-                                <rect key="frame" x="20" y="44" width="374" height="53"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name="SFProRounded-Heavy" family="SF Pro Rounded" pointSize="40"/>
-                                <color key="textColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.23529411759999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Regular Schedule" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nf4-8P-Bk0">
-                                <rect key="frame" x="20" y="105" width="293" height="45"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name="SFProRounded-Heavy" family="SF Pro Rounded" pointSize="30"/>
-                                <color key="textColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.23529411759999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="csx-X4-baA">
                                 <rect key="frame" x="340" y="808" width="54" height="54"/>
                                 <constraints>
@@ -98,10 +81,8 @@
                     <tabBarItem key="tabBarItem" title="Item" id="Ruh-KM-133"/>
                     <navigationItem key="navigationItem" id="XLu-Yn-9cD"/>
                     <connections>
-                        <outlet property="dateLabel" destination="Uvw-ae-0mC" id="88q-dk-3eX"/>
                         <outlet property="masterButton" destination="csx-X4-baA" id="IXr-Z6-ZAS"/>
                         <outlet property="scheduleCollectionView" destination="bWz-wX-fGB" id="IFR-n5-JLD"/>
-                        <outlet property="scheduleDiscriptorLabel" destination="Nf4-8P-Bk0" id="5Sd-Rq-c6z"/>
                         <segue destination="g1c-0e-PCq" kind="show" identifier="toUpcomingSegue" id="FF5-06-X1q"/>
                         <segue destination="Gzv-vB-RNe" kind="show" identifier="toSettingsSegue" id="iq4-5c-IMU"/>
                         <segue destination="UcQ-4k-Bbn" kind="show" identifier="toNotificationsSegue" id="71b-rV-O8m"/>

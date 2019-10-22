@@ -49,11 +49,11 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     var iconsList: [UIImage] = []
     var currentPeriodIndex: Int?
     var tillEndOfCurrentBool = true
-    
-    
-    
-    @IBOutlet weak var dateLabel: UILabel!
-    @IBOutlet weak var scheduleDiscriptorLabel: UILabel!
+    var headerView: UIView?
+    var headerSubview1: UIView?
+    var headerSubview2: UIView?
+    //@IBOutlet weak var dateLabel: UILabel!
+   // @IBOutlet weak var scheduleDiscriptorLabel: UILabel!
     @IBOutlet weak var scheduleCollectionView: UICollectionView!
     @IBOutlet weak var masterButton: UIButton!
     
@@ -66,13 +66,11 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         //change date
         let formater = DateFormatter()
         formater.dateFormat = "EEEE, M/d"
-        dateLabel.text = formater.string(from: Date())
+        //dateLabel.text = formater.string(from: Date())
 
-        
         addIcons()
         buttonSetup()
         addButtonsToArray()
-
 //        scheduleCollectionView.layer.cornerRadius = 7
 //        scheduleCollectionView.layer.shadowColor = UIColor.gray.cgColor
 //        scheduleCollectionView.layer.shadowOffset = CGSize(width: 0, height: 1.2)
@@ -95,6 +93,101 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         super.viewWillAppear(true)
         loadSchedule()
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        setupCollectionViewHeader()
+    }
+    
+    //MARK: Header
+    func setupCollectionViewHeader(){
+        let screenSize = UIScreen.main.bounds.size
+        scheduleCollectionView.contentInset = UIEdgeInsets(top: screenSize.height - 200, left: 0, bottom: 0, right: 0)
+        scheduleCollectionView.backgroundColor = .main
+        headerView = UIView()
+        headerSubview1 = UIView()
+        headerSubview2 = UIView()
+        
+        headerView?.frame = CGRect(x: 0, y: 0, width: screenSize.width, height: screenSize.height - 200)
+        headerView?.clipsToBounds = true
+        headerView?.backgroundColor = .main
+        
+        let countdownConst: CGFloat = 0.77
+        let countdownsize = screenSize.width * countdownConst
+        let countdownX = (screenSize.width/2) - (countdownsize/2)
+        let countdownY = (screenSize.height/2) - (countdownsize/2)
+        
+        let labelConstY: CGFloat = 0.4
+        let labelConstX: CGFloat = 0.9
+        
+        let labelViewHeight = countdownY * labelConstY
+        let labelViewWidth = screenSize.width * labelConstX
+        
+        let labelX = (screenSize.width/2) - (labelViewWidth/2)
+        let labelY = (countdownY/2) - (labelViewHeight/2)
+        
+        
+        headerSubview1?.frame = CGRect(x: labelX, y: labelY, width: labelViewWidth, height: labelViewHeight)
+        
+        headerSubview2?.frame = CGRect(x: countdownX, y: countdownY, width: countdownsize, height: countdownsize)
+
+        
+        headerSubview1?.backgroundColor = .blue
+        headerSubview2?.backgroundColor = .black
+        
+        headerView?.addSubview(headerSubview1!)
+        headerView?.addSubview(headerSubview2!)
+        view.addSubview(headerView!)
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let screenSize = UIScreen.main.bounds.size
+
+        let maxHeight = screenSize.height - 200
+        let minHeight: CGFloat = 150
+        
+        let y = scrollView.contentOffset.y * -1
+        let height = max(y, minHeight)
+        
+        headerView?.frame = CGRect(x: 0, y: 0, width: screenSize.width, height: height)
+        //        headerSubview1?.frame = CGRect(x: 50 + (height/8), y: max(height/8, 100), width: 30, height: 30)
+        headerSubview2?.frame = rectForCountdown(height, minHeight, maxHeight)
+    }
+    
+    func rectForCountdown(_ height: CGFloat, _ minHeight: CGFloat, _ maxHeight: CGFloat) -> CGRect{
+        let screenSize = UIScreen.main.bounds.size
+
+        //editables
+        //initial
+        let countdownConst: CGFloat = 0.77
+        
+        let finalSize: CGFloat = (minHeight - view.safeAreaInsets.top) * 0.7
+        let finalX: CGFloat = screenSize.width - finalSize - 25
+        let finalY: CGFloat = (minHeight - view.safeAreaInsets.top)/2 - finalSize/2
+        
+        
+        //final
+        let countdownsize = screenSize.width * countdownConst
+        let countdownX = (screenSize.width/2) - (countdownsize/2)
+        let countdownY = (screenSize.height/2) - (countdownsize/2)
+       
+        let countdownSizeEQ = ((countdownsize - finalSize)/(maxHeight - minHeight)) * (height - maxHeight) + countdownsize
+       
+        var countdownXEQ: CGFloat = 0
+        var countdownYEQ: CGFloat = 0
+       
+        
+        if(height <= maxHeight){
+           countdownXEQ = ((countdownX - finalX)/(maxHeight - minHeight)) * (height - maxHeight) + countdownX
+           countdownYEQ = ((countdownY - finalY)/(maxHeight - minHeight)) * (height - maxHeight) + countdownY
+        }else{
+           countdownXEQ = (screenSize.width/2) - (countdownSizeEQ/2)
+           countdownYEQ = (screenSize.height/2) - (countdownSizeEQ/2)
+        }
+        return CGRect(x: countdownXEQ, y: countdownYEQ, width: countdownSizeEQ, height: countdownSizeEQ)
+    }
+    
+    
+    
     
     // MARK: Buttons
 
@@ -219,8 +312,9 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         let masterCenter = masterButton.center
         let masterCenterX = masterButton.center.x
         let masterCenterY = masterButton.center.y
+        
         UIImpactFeedbackGenerator().impactOccurred(intensity: 0.9)
-
+        
         UIView.animate(withDuration: 0.02) {
             sender.transform = CGAffineTransform.identity
             sender.backgroundColor = UIColor(hue: 205/360.0, saturation: 0.83, brightness: 0.84, alpha: 1)
@@ -363,7 +457,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                     
                     DispatchQueue.main.async { [weak self] in
                         self?.scheduleCollectionView.reloadData()
-                        self?.scheduleDiscriptorLabel.text = scheduleName + " " + todaysDate
+                       // self?.scheduleDiscriptorLabel.text = scheduleName + " " + todaysDate
                     }
                     
                     
@@ -416,7 +510,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                     formater.dateFormat = "EEEE, M/d"
                     
                     DispatchQueue.main.async { [weak self] in
-                        self?.dateLabel.text = formater.string(from: Date())
+                       // self?.dateLabel.text = formater.string(from: Date())
                     }
                     
                     print("before school")
@@ -554,10 +648,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         }else{
             cell.timeLabel.text = String(usersSchedule[indexPath.row][1] as? String ?? "e") + " - " + String(usersSchedule[indexPath.row][2] as? String ?? "w")
         }
-        
-        
             return cell
-
     }
     
     // MARK: Seuge
