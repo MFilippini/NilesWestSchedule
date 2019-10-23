@@ -128,9 +128,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         
         headerSubview1?.frame = CGRect(x: labelX, y: labelY, width: labelViewWidth, height: labelViewHeight)
         
-        headerSubview2?.frame = CGRect(x: countdownX, y: countdownY, width: countdownsize, height: countdownsize)
+        headerSubview2?.frame = rectForCountdown(screenSize.height - 200, 150, screenSize.height - 200)
 
-        
         headerSubview1?.backgroundColor = .blue
         headerSubview2?.backgroundColor = .black
         
@@ -151,25 +150,73 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         headerView?.frame = CGRect(x: 0, y: 0, width: screenSize.width, height: height)
         //        headerSubview1?.frame = CGRect(x: 50 + (height/8), y: max(height/8, 100), width: 30, height: 30)
         headerSubview2?.frame = rectForCountdown(height, minHeight, maxHeight)
+        headerSubview1?.frame = rectForLabel(height, minHeight, maxHeight, rectForCountdown(minHeight, minHeight, maxHeight))
+    }
+    
+    func rectForLabel(_ height: CGFloat, _ minHeight: CGFloat, _ maxHeight: CGFloat, _ otherView: CGRect) -> CGRect{
+        let screenSize = UIScreen.main.bounds.size
+
+         //editables
+        let labelConstY: CGFloat = 0.4
+        let labelConstX: CGFloat = 0.9
+        let labelFinalCosntX: CGFloat = 0.9
+        let countdownConst: CGFloat = 0.77
+        
+        //final
+        let finalSizeX: CGFloat = otherView.minX - 25 * labelFinalCosntX
+        let finalSizeY: CGFloat = otherView.height
+        
+        let finalX: CGFloat = (otherView.minX - finalSizeX) / 2
+        let finalY: CGFloat = otherView.minY
+         
+        
+        //initial
+        let countdownsize = screenSize.width * countdownConst
+        let countdownY = (screenSize.height/2) - (countdownsize/2)
+        
+        let labelViewHeight = countdownY * labelConstY
+        let labelViewWidth = screenSize.width * labelConstX
+        let labelX = (screenSize.width/2) - (labelViewWidth/2)
+        let labelY = (countdownY/2) - (labelViewHeight/2)
+         
+         
+        
+         let labelSizeXEQ = ((labelViewWidth - finalSizeX)/(maxHeight - minHeight)) * (height - maxHeight) + labelViewWidth
+         let labelSizeYEQ = ((labelViewHeight - finalSizeY)/(maxHeight - minHeight)) * (height - maxHeight) + labelViewHeight
+        
+         var labelXEQ: CGFloat = 0
+         var labelYEQ: CGFloat = 0
+        
+         
+         if(height <= maxHeight){
+            labelXEQ = ((labelX - finalX)/(maxHeight - minHeight)) * (height - maxHeight) + labelX
+            labelYEQ = ((labelY - finalY)/(maxHeight - minHeight)) * (height - maxHeight) + labelY
+         }else{
+            labelXEQ = (screenSize.width/2) - (labelSizeXEQ/2)
+            labelYEQ = (countdownY/2) - (labelSizeYEQ/2)
+         }
+        
+         return CGRect(x: labelXEQ, y: labelYEQ, width: labelSizeXEQ, height: labelSizeYEQ)
     }
     
     func rectForCountdown(_ height: CGFloat, _ minHeight: CGFloat, _ maxHeight: CGFloat) -> CGRect{
         let screenSize = UIScreen.main.bounds.size
 
         //editables
-        //initial
         let countdownConst: CGFloat = 0.77
-        
-        let finalSize: CGFloat = (minHeight - view.safeAreaInsets.top) * 0.7
-        let finalX: CGFloat = screenSize.width - finalSize - 25
-        let finalY: CGFloat = (minHeight - view.safeAreaInsets.top)/2 - finalSize/2
-        
+        let finalSizeConst: CGFloat = 0.8
         
         //final
+        let finalSize: CGFloat = (minHeight - view.safeAreaInsets.top) * finalSizeConst
+        let finalX: CGFloat = screenSize.width - finalSize - 25
+        let finalY: CGFloat = (minHeight + view.safeAreaInsets.top)/2 - finalSize/2
+        
+        //initial
         let countdownsize = screenSize.width * countdownConst
         let countdownX = (screenSize.width/2) - (countdownsize/2)
         let countdownY = (screenSize.height/2) - (countdownsize/2)
-       
+        
+        
         let countdownSizeEQ = ((countdownsize - finalSize)/(maxHeight - minHeight)) * (height - maxHeight) + countdownsize
        
         var countdownXEQ: CGFloat = 0
@@ -308,6 +355,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     }
     
     
+    
     @objc func expandButton(sender: UIButton!) {
         let masterCenter = masterButton.center
         let masterCenterX = masterButton.center.x
@@ -315,10 +363,19 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         
         UIImpactFeedbackGenerator().impactOccurred(intensity: 0.9)
         
+        UIView.animate(withDuration: 0.3, animations: {
+            self.scheduleCollectionView.setContentOffset(
+           CGPoint(x: 0, y: 150), animated: false)
+        })
+
         UIView.animate(withDuration: 0.02) {
             sender.transform = CGAffineTransform.identity
             sender.backgroundColor = UIColor(hue: 205/360.0, saturation: 0.83, brightness: 0.84, alpha: 1)
         }
+        
+        self.scheduleCollectionView.scrollToItem(at: IndexPath(row: 0, section: 1), at: .top, animated: true)
+
+        
         
         if(buttonDirection!){
             for button in collapsingButtonArray{
