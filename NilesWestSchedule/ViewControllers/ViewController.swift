@@ -40,7 +40,7 @@ var collapsingButtonArray: [UIButton] = []
  
     */
 
-class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
+class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     var ref: DatabaseReference!
     var update: DispatchWorkItem?
@@ -62,6 +62,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         ref = Database.database().reference()
         scheduleCollectionView.delegate = self
         scheduleCollectionView.dataSource = self
+        
         
         //change date
         let formater = DateFormatter()
@@ -91,6 +92,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+        scheduleCollectionView.register(UINib.init(nibName: "UpcomingDaysCell", bundle: nil), forCellWithReuseIdentifier: "UpcomingDaysCell")
         loadSchedule()
     }
     
@@ -102,14 +104,14 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     func setupCollectionViewHeader(){
         let screenSize = UIScreen.main.bounds.size
         scheduleCollectionView.contentInset = UIEdgeInsets(top: screenSize.height - 200, left: 0, bottom: 0, right: 0)
-        scheduleCollectionView.backgroundColor = .main
+        scheduleCollectionView.backgroundColor = .white
         headerView = UIView()
         headerSubview1 = UIView()
         headerSubview2 = UIView()
         
         headerView?.frame = CGRect(x: 0, y: 0, width: screenSize.width, height: screenSize.height - 200)
         headerView?.clipsToBounds = true
-        headerView?.backgroundColor = .main
+        headerView?.backgroundColor = .white
         
         let countdownConst: CGFloat = 0.77
         let countdownsize = screenSize.width * countdownConst
@@ -663,49 +665,65 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == scheduleCollectionView {
-            return usersSchedule.count
+            return usersSchedule.count + 1
+            
         } else {
             return upcomingSpecialDays.count
         }
-        return upcomingSpecialDays.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! TestCollectionViewCell
-            cell.backgroundColor = .clear
-            
-        let colorTop = UIColor(red: 203.0/255.0, green: 45.0/255.0, blue: 62.0/255.0, alpha: 1.0).cgColor
-        let colorBottom = UIColor(red: 239.0/255.0, green: 71.0/255.0, blue: 58.0/255.0, alpha: 1.0).cgColor
-        
-    //        let gradient = CAGradientLayer()
-    //        gradient.colors = [colorTop, colorBottom]
-    //        gradient.locations = [0.0, 1.0]
-    //        gradient.frame = cell.bounds
-    //        cell.layer.insertSublayer(gradient, at: 0)
-        cell.layer.cornerRadius = 7
-        cell.layer.shadowColor = UIColor.gray.cgColor
-        cell.layer.shadowOffset = CGSize(width: 0, height: 1.2)
-        cell.layer.shadowRadius = 1.2
-        cell.layer.shadowOpacity = 1.0
-        cell.layer.masksToBounds = false
-        cell.layer.shadowPath = UIBezierPath(roundedRect:cell.bounds, cornerRadius: 16).cgPath
-        cell.layer.cornerRadius = 16
-        cell.backgroundColor = .white
-        cell.periodLabel.text = usersSchedule[indexPath.row][0] as? String
-    
-        
-        if((self.currentPeriodIndex ?? -1) == indexPath.row){
-            var ender = ""
-            if(tillEndOfCurrentBool){
-                ender = " Minutes Left"
-            }else{
-                ender = " Minutes Till Start"
+        if indexPath.row == usersSchedule.count {
+            let cell = scheduleCollectionView.dequeueReusableCell(withReuseIdentifier: "UpcomingDaysCell", for: indexPath) as! UpcomingDaysCell
+            for button in cell.buttons {
+                button.layer.cornerRadius = 25
+                button.backgroundColor = .purple
             }
-            cell.timeLabel.text = secondsToMinutes(seconds: self.timeTillNextClass ?? -1) + ender
-        }else{
-            cell.timeLabel.text = String(usersSchedule[indexPath.row][1] as? String ?? "e") + " - " + String(usersSchedule[indexPath.row][2] as? String ?? "w")
-        }
+
+            for i in 0...2 {
+                let button = cell.buttons[i]
+                button.backgroundColor = .purple
+                button.layer.cornerRadius = 42.5
+                let label = cell.labels[i]
+                print(upcomingSpecialDays)
+                print(i)
+                if upcomingSpecialDays.count != 0 {
+                    button.setTitle(upcomingSpecialDays[i][0] as? String, for: .normal)
+                    button.titleLabel?.textAlignment = .center
+                    label.text = upcomingSpecialDays[i][1] as? String
+                }
+                
+            }
             return cell
+
+        } else {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! TestCollectionViewCell
+            
+            cell.backgroundColor = .white
+            cell.periodLabel.text = usersSchedule[indexPath.row][0] as? String
+        
+            
+            if((self.currentPeriodIndex ?? -1) == indexPath.row){
+                var ender = ""
+                if(tillEndOfCurrentBool){
+                    ender = " Minutes Left"
+                }else{
+                    ender = " Minutes Till Start"
+                }
+                cell.timeLabel.text = secondsToMinutes(seconds: self.timeTillNextClass ?? -1) + ender
+            } else {
+                cell.timeLabel.text = String(usersSchedule[indexPath.row][1] as? String ?? "e") + " - " + String(usersSchedule[indexPath.row][2] as? String ?? "w")
+            }
+            return cell
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        if indexPath.row == usersSchedule.count {
+            return CGSize(width: 374, height: 160)
+        } else {
+            return CGSize(width: 374, height: 90)
+        }
     }
     
     // MARK: Seuge
