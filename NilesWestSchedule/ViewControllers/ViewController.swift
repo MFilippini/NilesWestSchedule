@@ -679,6 +679,12 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                 }
                 
             }
+            
+            cell.buttonPressed = {
+                // implement your logic here, e.g. call preformSegue()
+                self.performSegue(withIdentifier: "toUpcomingSegue", sender: self)
+            }
+            
             return cell
 
         } else {
@@ -699,6 +705,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             } else {
                 cell.timeLabel.text = String(usersSchedule[indexPath.row][1] as? String ?? "e") + " - " + String(usersSchedule[indexPath.row][2] as? String ?? "w")
             }
+            
+            
             return cell
         }
     }

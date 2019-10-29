@@ -21,6 +21,8 @@ class UpcomingDaysCell: UICollectionViewCell {
     var buttons: [UIButton] = []
     var labels: [UILabel] = []
     
+    var buttonPressed : (()->())?
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         buttons = [firstSpecialDayButton, secondSpecialDayButton, thirdSpecialDayButton]
@@ -30,17 +32,17 @@ class UpcomingDaysCell: UICollectionViewCell {
     
     
     @IBAction func firstButtonPressed(_ sender: Any) {
-        performSegueWithIdentifier("toUpcomingSegue", sender: nil)
+        buttonPressed?()
     }
     
     
     @IBAction func secondButtonPressed(_ sender: Any) {
-        
+        buttonPressed?()
     }
     
     
     @IBAction func thirdButtonPressed(_ sender: Any) {
-        
+        buttonPressed?()
     }
     
 }
