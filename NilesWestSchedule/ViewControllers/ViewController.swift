@@ -72,22 +72,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         addIcons()
         buttonSetup()
         addButtonsToArray()
-//        scheduleCollectionView.layer.cornerRadius = 7
-//        scheduleCollectionView.layer.shadowColor = UIColor.gray.cgColor
-//        scheduleCollectionView.layer.shadowOffset = CGSize(width: 0, height: 1.2)
-//        scheduleCollectionView.layer.shadowRadius = 1.2
-//        scheduleCollectionView.layer.shadowOpacity = 1.0
-//        scheduleCollectionView.layer.masksToBounds = false
-//        scheduleCollectionView.layer.shadowPath = UIBezierPath(roundedRect:scheduleCollectionView.bounds, cornerRadius: 7).cgPath
         
-//        for family: String in UIFont.familyNames
-//        {
-//          //  print(family)
-//            for names: String in UIFont.fontNames(forFamilyName: family)
-//            {
-//                //print("== \(names)")
-//            }
-//        }
     }
     
     override func viewWillAppear(_ animated: Bool) {

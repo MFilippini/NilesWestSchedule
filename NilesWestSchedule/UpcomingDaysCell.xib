@@ -24,6 +24,9 @@
                         <state key="normal" title="12/77">
                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </state>
+                        <connections>
+                            <action selector="firstButtonPressed:" destination="gTV-IL-0wX" eventType="touchUpInside" id="4M3-13-SJY"/>
+                        </connections>
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bm8-Ux-78K">
                         <rect key="frame" x="269" y="10" width="85" height="85"/>
@@ -33,6 +36,9 @@
                         <state key="normal" title="12/77">
                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </state>
+                        <connections>
+                            <action selector="thirdButtonPressed:" destination="gTV-IL-0wX" eventType="touchUpInside" id="PHc-IC-Kz9"/>
+                        </connections>
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5p8-Wx-hWb">
                         <rect key="frame" x="145" y="10" width="85" height="85"/>
@@ -42,6 +48,9 @@
                         <state key="normal" title="12/77">
                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </state>
+                        <connections>
+                            <action selector="secondButtonPressed:" destination="gTV-IL-0wX" eventType="touchUpInside" id="Jaf-oW-y1M"/>
+                        </connections>
                     </button>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Parent Teacher Conferences" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sl6-AO-ExW">
                         <rect key="frame" x="0.0" y="99" width="124" height="50"/>

@@ -27,5 +27,20 @@ class UpcomingDaysCell: UICollectionViewCell {
         labels = [firstLabel, secondLabel, thirdLabel]
         // Initialization code
     }
-
+    
+    
+    @IBAction func firstButtonPressed(_ sender: Any) {
+        performSegueWithIdentifier("toUpcomingSegue", sender: nil)
+    }
+    
+    
+    @IBAction func secondButtonPressed(_ sender: Any) {
+        
+    }
+    
+    
+    @IBAction func thirdButtonPressed(_ sender: Any) {
+        
+    }
+    
 }
