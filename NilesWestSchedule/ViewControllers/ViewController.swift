@@ -59,8 +59,7 @@ extension State {
 }
 
 
-class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource,UIGestureRecognizerDelegate {
-class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource,UIGestureRecognizerDelegate, UICollectionViewDelegateFlowLayout {
     
     var ref: DatabaseReference!
     var update: DispatchWorkItem?
