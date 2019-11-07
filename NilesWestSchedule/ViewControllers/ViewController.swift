@@ -9,6 +9,8 @@
 import UIKit
 import Firebase
 import FirebaseDatabase
+import UIKit.UIGestureRecognizerSubclass
+
 
 var todaysDate = ""
 
@@ -40,7 +42,24 @@ var collapsingButtonArray: [UIButton] = []
  
     */
 
-class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
+
+
+private enum State {
+    case closed
+    case open
+}
+
+extension State {
+    var opposite: State {
+        switch self {
+        case .open: return .closed
+        case .closed: return .open
+        }
+    }
+}
+
+
+class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource,UIGestureRecognizerDelegate {
     
     var ref: DatabaseReference!
     var update: DispatchWorkItem?
@@ -49,11 +68,16 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     var iconsList: [UIImage] = []
     var currentPeriodIndex: Int?
     var tillEndOfCurrentBool = true
+    
+    private var popupScrollUp: Bool = false
+
     var headerView: UIView?
     var headerSubview1: UIView?
-    var headerSubview2: UIView?
+    private var headerSubview2: UIView?
+    private let popupOffset: CGFloat = -1 * (UIScreen.main.bounds.size.height - 350)
+
     //@IBOutlet weak var dateLabel: UILabel!
-   // @IBOutlet weak var scheduleDiscriptorLabel: UILabel!
+    // @IBOutlet weak var scheduleDiscriptorLabel: UILabel!
     @IBOutlet weak var scheduleCollectionView: UICollectionView!
     @IBOutlet weak var masterButton: UIButton!
     
@@ -63,9 +87,16 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         scheduleCollectionView.delegate = self
         scheduleCollectionView.dataSource = self
         
+       // scheduleCollectionView.addGestureRecognizer(panRecognizer)
+
+       // panRecognizer.cancelsTouchesInView = false
+        
+      //  scheduleCollectionView.panGestureRecognizer.cancelsTouchesInView = false
+        
         //change date
         let formater = DateFormatter()
         formater.dateFormat = "EEEE, M/d"
+        
         //dateLabel.text = formater.string(from: Date())
 
         addIcons()
@@ -89,6 +120,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
 //        }
     }
     
+    
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         loadSchedule()
@@ -101,8 +134,9 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     //MARK: Header
     func setupCollectionViewHeader(){
         let screenSize = UIScreen.main.bounds.size
-        scheduleCollectionView.contentInset = UIEdgeInsets(top: screenSize.height - 200, left: 0, bottom: 0, right: 0)
-        scheduleCollectionView.backgroundColor = .main
+        scheduleCollectionView.contentInset = UIEdgeInsets(top: screenSize.height - 350, left: 0, bottom: 0, right: 0) // - minHeight of header - 200
+        scheduleCollectionView.backgroundColor = .red
+        
         headerView = UIView()
         headerSubview1 = UIView()
         headerSubview2 = UIView()
@@ -139,16 +173,20 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        
         let screenSize = UIScreen.main.bounds.size
 
         let maxHeight = screenSize.height - 200
         let minHeight: CGFloat = 150
         
-        let y = scrollView.contentOffset.y * -1
+        let y = (scrollView.contentOffset.y - 150) * -1
         let height = max(y, minHeight)
         
+        print("y:\(y)")
+        print("scrollview:\(scrollView.contentOffset.y)")
+        
         headerView?.frame = CGRect(x: 0, y: 0, width: screenSize.width, height: height)
-        //        headerSubview1?.frame = CGRect(x: 50 + (height/8), y: max(height/8, 100), width: 30, height: 30)
+
         headerSubview2?.frame = rectForCountdown(height, minHeight, maxHeight)
         headerSubview1?.frame = rectForLabel(height, minHeight, maxHeight, rectForCountdown(minHeight, minHeight, maxHeight))
     }
@@ -156,7 +194,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     func rectForLabel(_ height: CGFloat, _ minHeight: CGFloat, _ maxHeight: CGFloat, _ otherView: CGRect) -> CGRect{
         let screenSize = UIScreen.main.bounds.size
 
-         //editables
+        //editables
         let labelConstY: CGFloat = 0.4
         let labelConstX: CGFloat = 0.9
         let labelFinalCosntX: CGFloat = 0.9
@@ -180,7 +218,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         let labelY = (countdownY/2) - (labelViewHeight/2)
          
          
-        
          let labelSizeXEQ = ((labelViewWidth - finalSizeX)/(maxHeight - minHeight)) * (height - maxHeight) + labelViewWidth
          let labelSizeYEQ = ((labelViewHeight - finalSizeY)/(maxHeight - minHeight)) * (height - maxHeight) + labelViewHeight
         
@@ -221,20 +258,18 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
        
         var countdownXEQ: CGFloat = 0
         var countdownYEQ: CGFloat = 0
-       
-        
+
         if(height <= maxHeight){
            countdownXEQ = ((countdownX - finalX)/(maxHeight - minHeight)) * (height - maxHeight) + countdownX
            countdownYEQ = ((countdownY - finalY)/(maxHeight - minHeight)) * (height - maxHeight) + countdownY
         }else{
-           countdownXEQ = (screenSize.width/2) - (countdownSizeEQ/2)
-           countdownYEQ = (screenSize.height/2) - (countdownSizeEQ/2)
+            print("height > max")
+            countdownXEQ = (screenSize.width/2) - (countdownSizeEQ/2)
+            countdownYEQ = (screenSize.height/2) - (countdownSizeEQ/2)
         }
+        
         return CGRect(x: countdownXEQ, y: countdownYEQ, width: countdownSizeEQ, height: countdownSizeEQ)
     }
-    
-    
-    
     
     // MARK: Buttons
 
@@ -363,17 +398,21 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         
         UIImpactFeedbackGenerator().impactOccurred(intensity: 0.9)
         
-        UIView.animate(withDuration: 0.3, animations: {
-            self.scheduleCollectionView.setContentOffset(
-           CGPoint(x: 0, y: 150), animated: false)
-        })
+//        UIView.animate(withDuration: 0.3, animations: {
+//            self.scheduleCollectionView.setContentOffset(
+//            CGPoint(x: 0, y: 150), animated: false)
+//        })
 
+        scheduleCollectionView.panGestureRecognizer.setTranslation(CGPoint(x: 0, y: 0), in: scheduleCollectionView)
+        scheduleCollectionView.panGestureRecognizer.setTranslation(CGPoint(x: 0, y: 100), in: scheduleCollectionView)
+        
+        
         UIView.animate(withDuration: 0.02) {
             sender.transform = CGAffineTransform.identity
             sender.backgroundColor = UIColor(hue: 205/360.0, saturation: 0.83, brightness: 0.84, alpha: 1)
         }
         
-        self.scheduleCollectionView.scrollToItem(at: IndexPath(row: 0, section: 1), at: .top, animated: true)
+        //self.scheduleCollectionView.scrollToItem(at: IndexPath(row: 0, section: 1), at: .top, animated: true)
 
         
         
@@ -662,12 +701,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     // MARK: Collection Views
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if collectionView == scheduleCollectionView {
-            return usersSchedule.count
-        } else {
-            return upcomingSpecialDays.count
-        }
-        return upcomingSpecialDays.count
+        return usersSchedule.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -707,6 +741,190 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         }
             return cell
     }
+    
+    //MARK: Drawer
+    
+    
+    /// The current state of the animation. This variable is changed only when an animation completes.
+    private var currentState: State = .closed
+    
+    /// All of the currently running animators.
+    private var runningAnimators = [UIViewPropertyAnimator]()
+    
+    /// The progress of each animator. This array is parallel to the `runningAnimators` array.
+    private var animationProgress = [CGFloat]()
+    
+    private lazy var panRecognizer: InstantPanGestureRecognizer = {
+        let recognizer = InstantPanGestureRecognizer()
+        recognizer.addTarget(self, action: #selector(popupViewPanned(recognizer:)))
+        return recognizer
+    }()
+    
+    /// Animates the transition, if the animation is not already running.
+    private func animateTransitionIfNeeded(to state: State, duration: TimeInterval) {
+        
+        // ensure that the animators array is empty (which implies new animations need to be created)
+        guard runningAnimators.isEmpty else { return }
+        
+
+        // an animator for the transition
+        let transitionAnimator = UIViewPropertyAnimator(duration: duration, dampingRatio: 1, animations: {
+            switch state {
+            case .open:
+                self.scheduleCollectionView.contentOffset.y  = 0
+            case .closed:
+                self.scheduleCollectionView.contentOffset.y  = self.popupOffset
+            }
+            self.view.layoutIfNeeded()
+
+        })
+        
+        // the transition completion block
+        transitionAnimator.addCompletion { position in
+            
+            // update the state
+            switch position {
+            case .start:
+                self.currentState = state.opposite
+            case .end:
+                self.currentState = state
+            case .current:
+                ()
+            }
+            
+            // manually reset the constraint positions
+            switch self.currentState {
+            case .open:
+                self.scheduleCollectionView.contentOffset.y = 0
+            case .closed:
+                self.scheduleCollectionView.contentOffset.y = self.popupOffset
+            }
+            
+            // remove all running animators
+            self.runningAnimators.removeAll()
+        }
+        
+        
+        // start all animators
+        transitionAnimator.startAnimation()
+        
+        // keep track of all running animators
+        runningAnimators.append(transitionAnimator)
+    }
+    
+    @objc private func popupViewPanned(recognizer: UIPanGestureRecognizer) {
+        scheduleCollectionView.cancelInteractiveMovement()
+        
+        let yVelocity = recognizer.velocity(in: scheduleCollectionView).y
+        var translation = recognizer.translation(in: scheduleCollectionView.superview)
+        translation.y *= -1
+        
+        if(yVelocity > 0){
+            popupScrollUp = true
+        }else if(yVelocity < 0){
+            popupScrollUp = false
+        }
+        
+        
+        print(currentState)
+        print("offset:\(scheduleCollectionView.contentOffset.y)")
+        print("velocity:\(yVelocity)")
+        print("-------")
+        if(currentState == .closed && popupScrollUp){
+            return
+        } else if(currentState == .open && scheduleCollectionView.contentOffset.y == popupOffset && yVelocity < 0){
+            //scroll colection view
+            let x = scheduleCollectionView.contentOffset.x
+            let y = scheduleCollectionView.contentOffset.y
+            
+            
+            // scheduleCollectionView.contentInset.top += (-1 * yVelocity/100000)
+          //  recognizer.isEnabled = false
+            //panRecognizer.isEnabled = false
+            
+            
+           // scheduleCollectionView.panGestureRecognizer.setTranslation(CGPoint(x: 0, y: 0), in: scheduleCollectionView)
+           //scheduleCollectionView.panGestureRecognizer.setTranslation(translation, in: scheduleCollectionView)
+//
+//            scheduleCollectionView.layoutSubviews()
+//            scheduleCollectionView.layoutIfNeeded()
+
+            print("scroll")
+            return
+        }
+        print("decision made")
+        
+//        switch currentState {
+//        case .open:
+//            if(yVelocity < 0){
+//                recognizer.isEnabled = false
+//                return
+//            }
+//            //recognizer.cancelsTouchesInView = false
+//        case .closed:
+//            recognizer.cancelsTouchesInView = true
+//        }
+
+        switch recognizer.state {
+        case .began:
+            
+            // start the animations
+            if(scheduleCollectionView.contentOffset.y != 150){
+                animateTransitionIfNeeded(to: currentState.opposite, duration: 0.7)
+            }
+            
+            // pause all animations, since the next event may be a pan changed
+            runningAnimators.forEach { $0.pauseAnimation() }
+            
+            // keep track of each animator's progress
+            animationProgress = runningAnimators.map { $0.fractionComplete }
+            
+        case .changed:
+            // variable setup
+            let translation = recognizer.translation(in: scheduleCollectionView)
+            var fraction = translation.y / popupOffset
+            // adjust the fraction for the current state and reversed state
+            if currentState == .open { fraction *= -1 }
+            if runningAnimators[0].isReversed { fraction *= -1 }
+            
+            // apply the new fraction
+            for (index, animator) in runningAnimators.enumerated() {
+                animator.fractionComplete = fraction + animationProgress[index]
+            }
+            
+        case .ended:
+            
+            // variable setup
+            //let yVelocity = recognizer.velocity(in: scheduleCollectionView).y
+            let shouldClose = yVelocity > 0
+            
+            // if there is no motion, continue all animations and exit early
+            if yVelocity == 0 {
+                runningAnimators.forEach { $0.continueAnimation(withTimingParameters: nil, durationFactor: 0) }
+                break
+            }
+            
+            // reverse the animations based on their current state and pan motion
+            switch currentState {
+            case .open:
+                if !shouldClose && !runningAnimators[0].isReversed { runningAnimators.forEach { $0.isReversed = !$0.isReversed }}
+                if shouldClose && runningAnimators[0].isReversed { runningAnimators.forEach { $0.isReversed = !$0.isReversed } }
+            case .closed:
+                if shouldClose && !runningAnimators[0].isReversed { runningAnimators.forEach { $0.isReversed = !$0.isReversed } }
+                if !shouldClose && runningAnimators[0].isReversed { runningAnimators.forEach { $0.isReversed = !$0.isReversed }
+                }
+            }
+            
+            // continue all animations
+            runningAnimators.forEach { $0.continueAnimation(withTimingParameters: nil, durationFactor: 0) }
+            
+        default:
+            ()
+        }
+    }
+    
+    
+    
     
     // MARK: Seuge
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

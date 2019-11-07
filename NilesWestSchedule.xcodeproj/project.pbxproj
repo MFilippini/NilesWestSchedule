@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		490D088C2358F350004C1C14 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 490D088B2358F350004C1C14 /* Color.swift */; };
 		49585838233A9EA40008F0B9 /* UpcomingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49585837233A9EA40008F0B9 /* UpcomingViewController.swift */; };
+		495A23C12360E14300741908 /* InstantPanGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 495A23C02360E14300741908 /* InstantPanGestureRecognizer.swift */; };
 		49B5580F230B2C250038C08E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 49B5580E230B2C250038C08E /* GoogleService-Info.plist */; };
 		49B84A55233D4C0F002C01B4 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B84A54233D4C0F002C01B4 /* SettingsViewController.swift */; };
 		49B84A57233D4C5B002C01B4 /* NotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B84A56233D4C5B002C01B4 /* NotificationsViewController.swift */; };
@@ -43,6 +44,7 @@
 /* Begin PBXFileReference section */
 		490D088B2358F350004C1C14 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		49585837233A9EA40008F0B9 /* UpcomingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpcomingViewController.swift; sourceTree = "<group>"; };
+		495A23C02360E14300741908 /* InstantPanGestureRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstantPanGestureRecognizer.swift; sourceTree = "<group>"; };
 		49B5580E230B2C250038C08E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		49B84A54233D4C0F002C01B4 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		49B84A56233D4C5B002C01B4 /* NotificationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsViewController.swift; sourceTree = "<group>"; };
@@ -125,6 +127,7 @@
 				49BDC972230B2A0A00BCC96D /* Main.storyboard */,
 				490D088B2358F350004C1C14 /* Color.swift */,
 				49BDC96E230B2A0A00BCC96D /* AppDelegate.swift */,
+				495A23C02360E14300741908 /* InstantPanGestureRecognizer.swift */,
 				49585839233A9EB80008F0B9 /* ViewControllers */,
 				4A024320232196460058B66E /* UpcomingCell.swift */,
 				4AEAAFDA230F202100FAC1A5 /* TestCollectionViewCell.swift */,
@@ -335,6 +338,7 @@
 				49BDC96F230B2A0A00BCC96D /* AppDelegate.swift in Sources */,
 				49585838233A9EA40008F0B9 /* UpcomingViewController.swift in Sources */,
 				4A024321232196460058B66E /* UpcomingCell.swift in Sources */,
+				495A23C12360E14300741908 /* InstantPanGestureRecognizer.swift in Sources */,
 				490D088C2358F350004C1C14 /* Color.swift in Sources */,
 				49B84A57233D4C5B002C01B4 /* NotificationsViewController.swift in Sources */,
 				49B84A55233D4C0F002C01B4 /* SettingsViewController.swift in Sources */,
