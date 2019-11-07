@@ -13,14 +13,16 @@ import FirebaseDatabase
 
 class UpcomingViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource{
    
-    @IBOutlet weak var upcomingCollectionView: UICollectionView!
-        
+    @IBOutlet weak var upcomingDaysCollectionView: UICollectionView!
+    @IBOutlet weak var scheduleCollectionView: UICollectionView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        upcomingCollectionView.delegate = self
-        upcomingCollectionView.dataSource = self
+        scheduleCollectionView.delegate = self
+        scheduleCollectionView.dataSource = self
         
-        upcomingCollectionView.backgroundColor = .red
+        upcomingDaysCollectionView.delegate = self
+        upcomingDaysCollectionView.dataSource = self
         
         print(upcomingSpecialDays)
     }

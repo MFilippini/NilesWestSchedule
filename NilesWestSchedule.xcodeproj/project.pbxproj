@@ -28,7 +28,8 @@
 		4A1928A12315BB0E008E8D40 /* Raleway-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4A19288E2315BB01008E8D40 /* Raleway-Regular.ttf */; };
 		4A1928A32315BB0E008E8D40 /* Raleway-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4A1928942315BB03008E8D40 /* Raleway-SemiBold.ttf */; };
 		4A1928A52315BB0E008E8D40 /* Raleway-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4A1928902315BB02008E8D40 /* Raleway-Thin.ttf */; };
-		4A641BDD234D17B400D355AE /* SF-Pro-Rounded-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4A641BD8234D164C00D355AE /* SF-Pro-Rounded-Black.otf */; };
+		4A291EE7236142C300001E71 /* UpcomingDaysCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A291EE6236142C300001E71 /* UpcomingDaysCell.swift */; };
+		4A291EE823614D7100001E71 /* UpcomingDaysCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A291EE5236142C300001E71 /* UpcomingDaysCell.xib */; };
 		4A641BDE234D17B400D355AE /* SF-Pro-Rounded-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4A641BDB234D165000D355AE /* SF-Pro-Rounded-Bold.otf */; };
 		4A641BDF234D17B400D355AE /* SF-Pro-Rounded-Heavy.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4A641BD5234D164900D355AE /* SF-Pro-Rounded-Heavy.otf */; };
 		4A641BE0234D17B400D355AE /* SF-Pro-Rounded-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4A641BD7234D164B00D355AE /* SF-Pro-Rounded-Light.otf */; };
@@ -37,6 +38,7 @@
 		4A641BE3234D17B400D355AE /* SF-Pro-Rounded-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4A641BD6234D164A00D355AE /* SF-Pro-Rounded-Semibold.otf */; };
 		4A641BE4234D17B400D355AE /* SF-Pro-Rounded-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4A641BDA234D164F00D355AE /* SF-Pro-Rounded-Thin.otf */; };
 		4A641BE5234D17B400D355AE /* SF-Pro-Rounded-Ultralight.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4A641BD9234D164D00D355AE /* SF-Pro-Rounded-Ultralight.otf */; };
+		4AC582322372124C006AFB3A /* SF-Pro-Rounded-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4A641BD8234D164C00D355AE /* SF-Pro-Rounded-Black.otf */; };
 		4AEAAFDB230F202100FAC1A5 /* TestCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AEAAFDA230F202100FAC1A5 /* TestCollectionViewCell.swift */; };
 		DA8BE4A7E1CC75D8A3638F19 /* Pods_NilesWestSchedule.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BC9E21947D4CBF29A53D385 /* Pods_NilesWestSchedule.framework */; };
 /* End PBXBuildFile section */
@@ -65,6 +67,8 @@
 		4A1928902315BB02008E8D40 /* Raleway-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Raleway-Thin.ttf"; sourceTree = "<group>"; };
 		4A1928922315BB02008E8D40 /* Raleway-ExtraBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Raleway-ExtraBold.ttf"; sourceTree = "<group>"; };
 		4A1928942315BB03008E8D40 /* Raleway-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Raleway-SemiBold.ttf"; sourceTree = "<group>"; };
+		4A291EE5236142C300001E71 /* UpcomingDaysCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = UpcomingDaysCell.xib; path = "/Users/alushb/Desktop/Cool Stuff/NilesWestSchedule/NilesWestSchedule/UpcomingDaysCell.xib"; sourceTree = "<absolute>"; };
+		4A291EE6236142C300001E71 /* UpcomingDaysCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UpcomingDaysCell.swift; path = "/Users/alushb/Desktop/Cool Stuff/NilesWestSchedule/NilesWestSchedule/UpcomingDaysCell.swift"; sourceTree = "<absolute>"; };
 		4A641BD3234D164700D355AE /* SF-Pro-Rounded-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Rounded-Medium.otf"; sourceTree = "<group>"; };
 		4A641BD4234D164800D355AE /* SF-Pro-Rounded-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Rounded-Regular.otf"; sourceTree = "<group>"; };
 		4A641BD5234D164900D355AE /* SF-Pro-Rounded-Heavy.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Rounded-Heavy.otf"; sourceTree = "<group>"; };
@@ -129,8 +133,10 @@
 				49BDC96E230B2A0A00BCC96D /* AppDelegate.swift */,
 				495A23C02360E14300741908 /* InstantPanGestureRecognizer.swift */,
 				49585839233A9EB80008F0B9 /* ViewControllers */,
-				4A024320232196460058B66E /* UpcomingCell.swift */,
+				4A291EE6236142C300001E71 /* UpcomingDaysCell.swift */,
+				4A291EE5236142C300001E71 /* UpcomingDaysCell.xib */,
 				4AEAAFDA230F202100FAC1A5 /* TestCollectionViewCell.swift */,
+				4A024320232196460058B66E /* UpcomingCell.swift */,
 				49BDC975230B2A0C00BCC96D /* Assets.xcassets */,
 				49BDC977230B2A0C00BCC96D /* LaunchScreen.storyboard */,
 				49B5580E230B2C250038C08E /* GoogleService-Info.plist */,
@@ -255,6 +261,7 @@
 				4A19289D2315BB0E008E8D40 /* Raleway-Light.ttf in Resources */,
 				4A1928952315BB09008E8D40 /* Raleway-Black.ttf in Resources */,
 				4A641BE0234D17B400D355AE /* SF-Pro-Rounded-Light.otf in Resources */,
+				4A291EE823614D7100001E71 /* UpcomingDaysCell.xib in Resources */,
 				4A1928A32315BB0E008E8D40 /* Raleway-SemiBold.ttf in Resources */,
 				49BDC976230B2A0C00BCC96D /* Assets.xcassets in Resources */,
 				49B5580F230B2C250038C08E /* GoogleService-Info.plist in Resources */,
@@ -263,13 +270,13 @@
 				4A19289B2315BB0E008E8D40 /* Raleway-ExtraLight.ttf in Resources */,
 				4A641BDE234D17B400D355AE /* SF-Pro-Rounded-Bold.otf in Resources */,
 				4A1928A12315BB0E008E8D40 /* Raleway-Regular.ttf in Resources */,
-				4A641BDD234D17B400D355AE /* SF-Pro-Rounded-Black.otf in Resources */,
 				4A641BE5234D17B400D355AE /* SF-Pro-Rounded-Ultralight.otf in Resources */,
 				49BDC974230B2A0A00BCC96D /* Main.storyboard in Resources */,
 				4A641BE4234D17B400D355AE /* SF-Pro-Rounded-Thin.otf in Resources */,
 				4A1928972315BB0E008E8D40 /* Raleway-Bold.ttf in Resources */,
 				4A641BE2234D17B400D355AE /* SF-Pro-Rounded-Regular.otf in Resources */,
 				4A641BDF234D17B400D355AE /* SF-Pro-Rounded-Heavy.otf in Resources */,
+				4AC582322372124C006AFB3A /* SF-Pro-Rounded-Black.otf in Resources */,
 				4A1928A52315BB0E008E8D40 /* Raleway-Thin.ttf in Resources */,
 				4A641BE3234D17B400D355AE /* SF-Pro-Rounded-Semibold.otf in Resources */,
 			);
@@ -337,6 +344,7 @@
 				49BDC971230B2A0A00BCC96D /* ViewController.swift in Sources */,
 				49BDC96F230B2A0A00BCC96D /* AppDelegate.swift in Sources */,
 				49585838233A9EA40008F0B9 /* UpcomingViewController.swift in Sources */,
+				4A291EE7236142C300001E71 /* UpcomingDaysCell.swift in Sources */,
 				4A024321232196460058B66E /* UpcomingCell.swift in Sources */,
 				495A23C12360E14300741908 /* InstantPanGestureRecognizer.swift in Sources */,
 				490D088C2358F350004C1C14 /* Color.swift in Sources */,
