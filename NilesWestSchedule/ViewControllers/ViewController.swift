@@ -681,11 +681,10 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             }
             
             cell.buttonPressed = {
-                // implement your logic here, e.g. call preformSegue()
                 self.performSegue(withIdentifier: "toUpcomingSegue", sender: self)
             }
             
-            return cell
+            return cell 
 
         } else {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! TestCollectionViewCell

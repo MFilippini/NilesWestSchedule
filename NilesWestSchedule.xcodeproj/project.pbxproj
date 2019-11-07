@@ -29,7 +29,6 @@
 		4A1928A52315BB0E008E8D40 /* Raleway-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4A1928902315BB02008E8D40 /* Raleway-Thin.ttf */; };
 		4A291EE7236142C300001E71 /* UpcomingDaysCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A291EE6236142C300001E71 /* UpcomingDaysCell.swift */; };
 		4A291EE823614D7100001E71 /* UpcomingDaysCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A291EE5236142C300001E71 /* UpcomingDaysCell.xib */; };
-		4A641BDD234D17B400D355AE /* SF-Pro-Rounded-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4A641BD8234D164C00D355AE /* SF-Pro-Rounded-Black.otf */; };
 		4A641BDE234D17B400D355AE /* SF-Pro-Rounded-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4A641BDB234D165000D355AE /* SF-Pro-Rounded-Bold.otf */; };
 		4A641BDF234D17B400D355AE /* SF-Pro-Rounded-Heavy.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4A641BD5234D164900D355AE /* SF-Pro-Rounded-Heavy.otf */; };
 		4A641BE0234D17B400D355AE /* SF-Pro-Rounded-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4A641BD7234D164B00D355AE /* SF-Pro-Rounded-Light.otf */; };
@@ -38,6 +37,7 @@
 		4A641BE3234D17B400D355AE /* SF-Pro-Rounded-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4A641BD6234D164A00D355AE /* SF-Pro-Rounded-Semibold.otf */; };
 		4A641BE4234D17B400D355AE /* SF-Pro-Rounded-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4A641BDA234D164F00D355AE /* SF-Pro-Rounded-Thin.otf */; };
 		4A641BE5234D17B400D355AE /* SF-Pro-Rounded-Ultralight.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4A641BD9234D164D00D355AE /* SF-Pro-Rounded-Ultralight.otf */; };
+		4AC582322372124C006AFB3A /* SF-Pro-Rounded-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4A641BD8234D164C00D355AE /* SF-Pro-Rounded-Black.otf */; };
 		4AEAAFDB230F202100FAC1A5 /* TestCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AEAAFDA230F202100FAC1A5 /* TestCollectionViewCell.swift */; };
 		DA8BE4A7E1CC75D8A3638F19 /* Pods_NilesWestSchedule.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BC9E21947D4CBF29A53D385 /* Pods_NilesWestSchedule.framework */; };
 /* End PBXBuildFile section */
@@ -267,13 +267,13 @@
 				4A19289B2315BB0E008E8D40 /* Raleway-ExtraLight.ttf in Resources */,
 				4A641BDE234D17B400D355AE /* SF-Pro-Rounded-Bold.otf in Resources */,
 				4A1928A12315BB0E008E8D40 /* Raleway-Regular.ttf in Resources */,
-				4A641BDD234D17B400D355AE /* SF-Pro-Rounded-Black.otf in Resources */,
 				4A641BE5234D17B400D355AE /* SF-Pro-Rounded-Ultralight.otf in Resources */,
 				49BDC974230B2A0A00BCC96D /* Main.storyboard in Resources */,
 				4A641BE4234D17B400D355AE /* SF-Pro-Rounded-Thin.otf in Resources */,
 				4A1928972315BB0E008E8D40 /* Raleway-Bold.ttf in Resources */,
 				4A641BE2234D17B400D355AE /* SF-Pro-Rounded-Regular.otf in Resources */,
 				4A641BDF234D17B400D355AE /* SF-Pro-Rounded-Heavy.otf in Resources */,
+				4AC582322372124C006AFB3A /* SF-Pro-Rounded-Black.otf in Resources */,
 				4A1928A52315BB0E008E8D40 /* Raleway-Thin.ttf in Resources */,
 				4A641BE3234D17B400D355AE /* SF-Pro-Rounded-Semibold.otf in Resources */,
 			);
