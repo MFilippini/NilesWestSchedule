@@ -67,8 +67,8 @@
 		4A1928902315BB02008E8D40 /* Raleway-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Raleway-Thin.ttf"; sourceTree = "<group>"; };
 		4A1928922315BB02008E8D40 /* Raleway-ExtraBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Raleway-ExtraBold.ttf"; sourceTree = "<group>"; };
 		4A1928942315BB03008E8D40 /* Raleway-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Raleway-SemiBold.ttf"; sourceTree = "<group>"; };
-		4A291EE5236142C300001E71 /* UpcomingDaysCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = UpcomingDaysCell.xib; path = "/Users/alushb/Desktop/Cool Stuff/NilesWestSchedule/NilesWestSchedule/UpcomingDaysCell.xib"; sourceTree = "<absolute>"; };
-		4A291EE6236142C300001E71 /* UpcomingDaysCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UpcomingDaysCell.swift; path = "/Users/alushb/Desktop/Cool Stuff/NilesWestSchedule/NilesWestSchedule/UpcomingDaysCell.swift"; sourceTree = "<absolute>"; };
+		4A291EE5236142C300001E71 /* UpcomingDaysCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UpcomingDaysCell.xib; sourceTree = "<group>"; };
+		4A291EE6236142C300001E71 /* UpcomingDaysCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpcomingDaysCell.swift; sourceTree = "<group>"; };
 		4A641BD3234D164700D355AE /* SF-Pro-Rounded-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Rounded-Medium.otf"; sourceTree = "<group>"; };
 		4A641BD4234D164800D355AE /* SF-Pro-Rounded-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Rounded-Regular.otf"; sourceTree = "<group>"; };
 		4A641BD5234D164900D355AE /* SF-Pro-Rounded-Heavy.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Rounded-Heavy.otf"; sourceTree = "<group>"; };

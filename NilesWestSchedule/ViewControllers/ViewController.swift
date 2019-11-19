@@ -25,6 +25,7 @@ var scheduleName = ""
 var specialMessage = ""
 var buttonDirection: Bool?
 var collapsingButtonArray: [UIButton] = []
+var selectedButton: Int = 0
 
     /*
         Schedules----------
@@ -473,12 +474,14 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                     if(refDateDouble - todayDateDouble > 0){
                         formater.dateFormat = "M/dd"
                         let dateFormatted = formater.string(from: refDate)
-                        upcomingSpecialDaysTemp.append([dateFormatted,values["name"] ?? "falied",refDateDouble])
+                        upcomingSpecialDaysTemp.append([dateFormatted,values["name"] ?? "falied",refDateDouble, values["schedule"] ?? "falied"])
                     }
                 }
                 upcomingSpecialDaysTemp = upcomingSpecialDaysTemp.sorted{($0[2] as! Double) < ($1[2]as! Double)}
 
+                print("dfkjghlsjdkafnadf")
                 print(upcomingSpecialDaysTemp)
+                print("dfkjghlsjdkafnadf")
                 
                 if dates[dateKey] != nil{
                     let date = dates[dateKey]
@@ -687,7 +690,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     // MARK: Collection Views
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return usersSchedule.count
+        return usersSchedule.count + 1
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -710,10 +713,20 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                     button.titleLabel?.textAlignment = .center
                     label.text = upcomingSpecialDays[i][1] as? String
                 }
-                
             }
             
-            cell.buttonPressed = {
+            cell.firstButtonPressed = {
+                selectedButton = 0
+                self.performSegue(withIdentifier: "toUpcomingSegue", sender: self)
+            }
+            
+            cell.secondButtonPressed = {
+                selectedButton = 1
+                self.performSegue(withIdentifier: "toUpcomingSegue", sender: self)
+            }
+            
+            cell.thirdButtonPressed = {
+                selectedButton = 2
                 self.performSegue(withIdentifier: "toUpcomingSegue", sender: self)
             }
             
@@ -754,10 +767,10 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     //MARK: Drawer
     
     
-    /// The current state of the animation. This variable is changed only when an animation completes.
+    // The current state of the animation. This variable is changed only when an animation completes.
     private var currentState: State = .closed
     
-    /// All of the currently running animators.
+    // All of the currently running animators.
     private var runningAnimators = [UIViewPropertyAnimator]()
     
     /// The progress of each animator. This array is parallel to the `runningAnimators` array.
@@ -769,7 +782,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         return recognizer
     }()
     
-    /// Animates the transition, if the animation is not already running.
+    // Animates the transition, if the animation is not already running.
     private func animateTransitionIfNeeded(to state: State, duration: TimeInterval) {
         
         // ensure that the animators array is empty (which implies new animations need to be created)
@@ -937,24 +950,29 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     // MARK: Seuge
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let masterCenter = masterButton.center
-        let masterCenterX = masterButton.center.x
-        let masterCenterY = masterButton.center.y
-        
-        if(!buttonDirection!){
-            UIView.animate(withDuration: 0.2, animations: {
-                
-                collapsingButtonArray[0].center = masterCenter
-                collapsingButtonArray[1].center = masterCenter
-                collapsingButtonArray[2].center = masterCenter
-                
-            }, completion: { (finished: Bool) in
-                for button in collapsingButtonArray{
-                    button.removeFromSuperview()
-                }
-            })
-            buttonDirection = !(buttonDirection!)
+//        let masterCenter = masterButton.center
+//        let masterCenterX = masterButton.center.x
+//        let masterCenterY = masterButton.center.y
+//
+//        if(!buttonDirection!){
+//            UIView.animate(withDuration: 0.2, animations: {
+//
+//                collapsingButtonArray[0].center = masterCenter
+//                collapsingButtonArray[1].center = masterCenter
+//                collapsingButtonArray[2].center = masterCenter
+//
+//            }, completion: { (finished: Bool) in
+//                for button in collapsingButtonArray{
+//                    button.removeFromSuperview()
+//                }
+//            })
+//            buttonDirection = !(buttonDirection!)
+//        }
+        if segue.identifier == "toUpcomingSegue" {
+            let destinationVC = segue.destination as! UpcomingViewController
+            destinationVC.scheduleType = upcomingSpecialDays[selectedButton]
         }
+        
     }
 }
 
