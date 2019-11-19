@@ -21,7 +21,9 @@ class UpcomingDaysCell: UICollectionViewCell {
     var buttons: [UIButton] = []
     var labels: [UILabel] = []
     
-    var buttonPressed : (()->())?
+    var firstButtonPressed : (()->())?
+    var secondButtonPressed : (()->())?
+    var thirdButtonPressed : (()->())?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -32,17 +34,17 @@ class UpcomingDaysCell: UICollectionViewCell {
     
     
     @IBAction func firstButtonPressed(_ sender: Any) {
-        buttonPressed?()
+        firstButtonPressed?()
     }
     
     
     @IBAction func secondButtonPressed(_ sender: Any) {
-        buttonPressed?()
+        secondButtonPressed?()
     }
     
     
     @IBAction func thirdButtonPressed(_ sender: Any) {
-        buttonPressed?()
+        thirdButtonPressed?()
     }
     
 }
