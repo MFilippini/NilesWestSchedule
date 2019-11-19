@@ -71,15 +71,10 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     var currentPeriodIndex: Int?
     var tillEndOfCurrentBool = true
     
-    
-
     var headerView: UIView?
     var headerSubview1: UIView?
     private var headerSubview2: UIView?
     private let popupOffset: CGFloat = UIScreen.main.bounds.size.height - 150
-
-    //@IBOutlet weak var dateLabel: UILabel!
-    // @IBOutlet weak var scheduleDiscriptorLabel: UILabel!
     
     @IBOutlet weak var scheduleCollectionView: UICollectionView!
     @IBOutlet weak var masterButton: UIButton!
@@ -99,7 +94,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         drawerView.addGestureRecognizer(panRecognizer)
         drawerView.layer.cornerRadius = 25
         drawerView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
-        
+        drawerView.layer.backgroundColor = UIColor.background.cgColor
         panRecognizer.delegate = self
         
         //change date
@@ -115,25 +110,11 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     }
     
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        
         let gesture = (gestureRecognizer as! UIPanGestureRecognizer)
         let direction = gesture.velocity(in: drawerView).y
-            print("check offset:\(scheduleCollectionView.contentOffset.y)")
-        //let disable = (currentState == .open && scheduleCollectionView.contentOffset.y <= 0 && direction > 0)
-        //print("disable:\(disable)")
-        print("direction:\(direction)")
-        
-        let velocityInPan = scheduleCollectionView.panGestureRecognizer.velocity(in: scheduleCollectionView).y
-        
-        // change 10 to the top constraint
-        if(scheduleCollectionView.contentOffset.y < 0 && velocityInPan > 0 && currentState == .open){
-            print("triggered")
-            scheduleCollectionView.isScrollEnabled = false
-
-        }
         
         if ((currentState == .open && scheduleCollectionView.contentOffset.y == 0 && direction > 0) || currentState == .closed) {
-            
-            print("close View ")
             scheduleCollectionView.isScrollEnabled = false
         } else {
             scheduleCollectionView.isScrollEnabled = true
@@ -195,7 +176,9 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         
-                       
+        if scrollView.contentOffset.y < 0 {
+            scrollView.contentOffset.y = 0
+        }
         
         let screenSize = UIScreen.main.bounds.size
 
