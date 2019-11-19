@@ -787,7 +787,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     
     // The current state of the animation. This variable is changed only when an animation completes.
-    private var currentState: State = .closed
     
     // All of the currently running animators.
     private var runningAnimators = [UIViewPropertyAnimator]()
