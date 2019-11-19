@@ -96,6 +96,9 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         scheduleCollectionView.isUserInteractionEnabled = true
         scheduleCollectionView.isScrollEnabled = true
         drawerView.addGestureRecognizer(panRecognizer)
+        drawerView.layer.cornerRadius = 25
+        drawerView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        
         panRecognizer.delegate = self
         
         //change date
@@ -112,14 +115,27 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         let gesture = (gestureRecognizer as! UIPanGestureRecognizer)
-        let direction = gesture.velocity(in: view).y
+        let direction = gesture.velocity(in: drawerView).y
+            print("check offset:\(scheduleCollectionView.contentOffset.y)")
+        //let disable = (currentState == .open && scheduleCollectionView.contentOffset.y <= 0 && direction > 0)
+        //print("disable:\(disable)")
+        print("direction:\(direction)")
+        
+        let velocityInPan = scheduleCollectionView.panGestureRecognizer.velocity(in: scheduleCollectionView).y
+        
+        // change 10 to the top constraint
+        if(scheduleCollectionView.contentOffset.y < 0 && velocityInPan > 0 && currentState == .open){
+            print("triggered")
+            scheduleCollectionView.isScrollEnabled = false
 
-        if ((currentState == .open && scheduleCollectionView.contentOffset.y <= 0 && direction > 0) || currentState == .closed) {
-            print("Dont scroll table")
+        }
+        
+        if ((currentState == .open && scheduleCollectionView.contentOffset.y == 0 && direction > 0) || currentState == .closed) {
+            
+            print("close View ")
             scheduleCollectionView.isScrollEnabled = false
         } else {
             scheduleCollectionView.isScrollEnabled = true
-            print("Scroll table")
         }
 
         return false
@@ -139,7 +155,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     //MARK: Header
     func setupCollectionViewHeader(){
         let screenSize = UIScreen.main.bounds.size
-        scheduleCollectionView.backgroundColor = .red
+        scheduleCollectionView.backgroundColor = .clear
         
         headerView = UIView()
         headerSubview1 = UIView()
@@ -178,9 +194,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         
-        if(scrollView.contentOffset.y == 0 && scrollView.panGestureRecognizer.translation(in: scheduleCollectionView).y > 0 ){
-           // self.panRecognizer.isEnabled = true
-        }
                        
         
         let screenSize = UIScreen.main.bounds.size
@@ -191,8 +204,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         let y = (screenSize.height - drawerHeightConstraint.constant)
         let height = max(y, minHeight)
         
-        print("y:\(y)")
-        print("heightConstant:\(drawerHeightConstraint.constant)")
         
         headerView?.frame = CGRect(x: 0, y: 0, width: screenSize.width, height: height)
 
