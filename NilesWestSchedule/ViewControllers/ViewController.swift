@@ -63,6 +63,7 @@ extension State {
 
 class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource,UIGestureRecognizerDelegate, UICollectionViewDelegateFlowLayout {
     
+    
     var ref: DatabaseReference!
     var update: DispatchWorkItem?
     var timeTillNextUpdate: Double?
@@ -91,16 +92,19 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         
         scheduleCollectionView.isUserInteractionEnabled = true
         scheduleCollectionView.isScrollEnabled = true
+        scheduleCollectionView.bounces = false
         drawerView.addGestureRecognizer(panRecognizer)
         drawerView.layer.cornerRadius = 25
         drawerView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
-        drawerView.layer.backgroundColor = UIColor.background.cgColor
         panRecognizer.delegate = self
+        
+        //color
+        drawerView.layer.backgroundColor = UIColor.background.cgColor
+        self.view.backgroundColor = .white
         
         //change date
         let formater = DateFormatter()
         formater.dateFormat = "EEEE, M/d"
-        
         //dateLabel.text = formater.string(from: Date())
 
         addIcons()
@@ -108,6 +112,11 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         addButtonsToArray()
         
     }
+    
+    override var preferredStatusBarStyle : UIStatusBarStyle {
+        return .darkContent
+    }
+    
     
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         
@@ -126,6 +135,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+        
         scheduleCollectionView.register(UINib.init(nibName: "UpcomingDaysCell", bundle: nil), forCellWithReuseIdentifier: "UpcomingDaysCell")
         loadSchedule()
     }
@@ -163,22 +173,25 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         
         
         headerSubview1?.frame = CGRect(x: labelX, y: labelY, width: labelViewWidth, height: labelViewHeight)
-        
         headerSubview2?.frame = rectForCountdown(screenSize.height - 200, 150, screenSize.height - 200)
 
-        headerSubview1?.backgroundColor = .blue
-        headerSubview2?.backgroundColor = .black
+        setupViewsInHeader()
         
         headerView?.addSubview(headerSubview1!)
         headerView?.addSubview(headerSubview2!)
         view.addSubview(headerView!)
     }
     
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    func setupViewsInHeader(){
+        //header 1 is top banner
         
-        if scrollView.contentOffset.y < 0 {
-            scrollView.contentOffset.y = 0
-        }
+        //header 2 is middle display
+        headerSubview1?.layer.cornerRadius = 25
+        headerSubview1?.layer.backgroundColor = UIColor.main.cgColor
+        headerSubview2?.layer.backgroundColor = UIColor.main.cgColor
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
         
         let screenSize = UIScreen.main.bounds.size
 
@@ -711,12 +724,12 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             let cell = scheduleCollectionView.dequeueReusableCell(withReuseIdentifier: "UpcomingDaysCell", for: indexPath) as! UpcomingDaysCell
             for button in cell.buttons {
                 button.layer.cornerRadius = 25
-                button.backgroundColor = .purple
+                button.backgroundColor = .main
             }
 
             for i in 0...2 {
                 let button = cell.buttons[i]
-                button.backgroundColor = .purple
+                button.backgroundColor = .main
                 button.layer.cornerRadius = 42.5
                 let label = cell.labels[i]
                 print(upcomingSpecialDays)
@@ -778,8 +791,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     }
     
     //MARK: Drawer
-    
-    
     // The current state of the animation. This variable is changed only when an animation completes.
     
     // All of the currently running animators.
@@ -857,7 +868,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         case .began:
             
             // start the animations
-            animateTransitionIfNeeded(to: currentState.opposite, duration: 0.45)
+            animateTransitionIfNeeded(to: currentState.opposite, duration: 0.4)
             
             // pause all animations, since the next event may be a pan changed
             runningAnimators.forEach { $0.pauseAnimation() }

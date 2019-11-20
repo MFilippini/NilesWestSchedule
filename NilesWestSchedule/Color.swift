@@ -36,18 +36,31 @@ extension UIColor {
         )
     }
     
-    static var main: UIColor{
-        let mainColorList = [UIColor.init(red: 210, green: 43, blue: 35)]
+    static var main: UIColor{ //main color
+        let mainColorList = [
+            UIColor.init(red: 210, green: 43, blue: 35)
+        ]
         return mainColorList[colorIndex]
     }
     
-    static var background: UIColor{
-        let backgroundColorList = [UIColor.init(red: 65, green: 65, blue: 65)]
+    static var background: UIColor{ //color for background
+        let backgroundColorList = [
+            UIColor.init(red: 75, green: 65, blue: 65)
+        ]
         return backgroundColorList[colorIndex]
     }
     
-    static var accent: UIColor{
-        let accentColorList = [UIColor.init(red: 65, green: 65, blue: 65)]
+    static var accent: UIColor{ //maybe lighter or darker but based off of main
+        let accentColorList = [
+            UIColor.init(red: 198, green: 0, blue: 0)
+        ]
+        return accentColorList[colorIndex]
+    }
+    
+    static var offwhite: UIColor{ //white color but influenced by the main
+        let accentColorList = [
+            UIColor.init(red: 253, green: 235, blue: 235)
+        ]
         return accentColorList[colorIndex]
     }
     
