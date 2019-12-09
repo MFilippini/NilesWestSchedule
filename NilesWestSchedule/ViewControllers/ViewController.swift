@@ -11,7 +11,6 @@ import Firebase
 import FirebaseDatabase
 import UIKit.UIGestureRecognizerSubclass
 
-
 var todaysDate = ""
 
 var dailySchedule: [[Any]] = []
@@ -43,8 +42,6 @@ var selectedButton: Int = 0
  
     */
 
-
-
 enum State {
     case closed
     case open
@@ -72,9 +69,10 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     var currentPeriodIndex: Int?
     var tillEndOfCurrentBool = true
     
+    weak var insideView: UIView!
     var headerView: UIView?
-    var headerSubview1: UIView?
-    private var headerSubview2: UIView?
+    var titleHeader: HeaderView?
+    private var countdownHeader: HeaderView?
     private let popupOffset: CGFloat = UIScreen.main.bounds.size.height - 150
     
     @IBOutlet weak var scheduleCollectionView: UICollectionView!
@@ -150,9 +148,9 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         scheduleCollectionView.backgroundColor = .clear
         
         headerView = UIView()
-        headerSubview1 = UIView()
-        headerSubview2 = UIView()
-        
+        titleHeader = HeaderView() as! HeaderView
+        countdownHeader = HeaderView() as! HeaderView
+                
         headerView?.frame = CGRect(x: 0, y: 0, width: screenSize.width, height: screenSize.height - 150)
         headerView?.clipsToBounds = true
         headerView?.backgroundColor = .white
@@ -171,28 +169,124 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         let labelX = (screenSize.width/2) - (labelViewWidth/2)
         let labelY = (countdownY/2) - (labelViewHeight/2)
         
-        
-        headerSubview1?.frame = CGRect(x: labelX, y: labelY, width: labelViewWidth, height: labelViewHeight)
-        headerSubview2?.frame = rectForCountdown(screenSize.height - 200, 150, screenSize.height - 200)
+        countdownHeader?.layer.backgroundColor = UIColor.blue.cgColor
+        titleHeader?.layer.backgroundColor = UIColor.red.cgColor
+    
+        titleHeader?.frame = CGRect(x: labelX, y: labelY, width: labelViewWidth, height: labelViewHeight)
+        countdownHeader?.frame = rectForCountdown(screenSize.height - 200, 150, screenSize.height - 200)
 
-        setupViewsInHeader()
         
-        headerView?.addSubview(headerSubview1!)
-        headerView?.addSubview(headerSubview2!)
+        headerView?.addSubview(titleHeader!)
+        headerView?.addSubview(countdownHeader!)
         view.addSubview(headerView!)
+        
+        /*
+        let insideView = UIView(frame: .zero)
+        insideView.translatesAutoresizingMaskIntoConstraints = false
+        self.countdownHeader!.addSubview(insideView)
+        NSLayoutConstraint.activate([
+            insideView.topAnchor.constraint(equalTo: self.countdownHeader!.topAnchor, constant: 32),
+            insideView.leadingAnchor.constraint(equalTo: self.countdownHeader!.leadingAnchor, constant: 32),
+            insideView.trailingAnchor.constraint(equalTo: self.countdownHeader!.trailingAnchor, constant: -32),
+            insideView.bottomAnchor.constraint(equalTo: self.countdownHeader!.bottomAnchor, constant: -32)
+        ])
+        self.insideView = insideView
+        
+        insideView.backgroundColor = .clear
+ */
+        setupViewsInHeader()
+
+        
     }
+    
+    func makeCircle(){
+        let backgroundCircle = CAShapeLayer()
+        let outsideRing = CAShapeLayer()
+        
+        // outside ring only appears in the animation as the progress bar
+        /*
+        outsideRing.path = UIBezierPath(arcCenter: countdownHeader!.center, radius: (countdownHeader!.frame.width - 20)/2, startAngle: CGFloat(0), endAngle: CGFloat(2*Float.pi), clockwise: true).cgPath
+        
+        outsideRing.fillColor = UIColor.accent.cgColor
+        outsideRing.lineWidth = 8
+        outsideRing.strokeEnd = 0
+        outsideRing.zPosition = -50
+        outsideRing.lineCap = CAShapeLayerLineCap.round
+        */
+        // background circle is similar to the ring but it has a fill color and displays a "track in grey"
+        backgroundCircle.path = UIBezierPath(arcCenter: countdownHeader!.center, radius: (countdownHeader!.frame.width - 20)/2, startAngle: CGFloat(Float.pi/2.0), endAngle: CGFloat(Float.pi*2.5), clockwise: false).cgPath
+        
+        backgroundCircle.strokeColor = UIColor.background.cgColor
+        backgroundCircle.fillColor = UIColor.accent.cgColor
+        backgroundCircle.lineWidth = 8
+        backgroundCircle.zPosition = -60 // behind the ring
+        backgroundCircle.strokeEnd = 1
+        
+        //ringAnimate(ring: outsideRing, indexOfCell: indexOfCell, section: section)
+    }
+    
+   /* func ringAnimate(ring: CAShapeLayer, indexOfCell: Int, section: Int){
+        let progressBarAnimate = CABasicAnimation(keyPath: "strokeEnd")
+        let progressPercent = Float32(timesCompleteArray[section][indexOfCell]) / Float32(timesPerDayArray[section][indexOfCell])
+        
+        progressBarAnimate.toValue = CGFloat(progressPercent)
+        progressBarAnimate.duration = 0.7
+        ring.strokeColor = colors[colorsArray[section][indexOfCell]]![palatteIdentifier].cgColor
+        progressBarAnimate.isRemovedOnCompletion = false
+        progressBarAnimate.fillMode = CAMediaTimingFillMode.forwards
+        
+        ring.add(progressBarAnimate,forKey: nil)
+    }
+    */
     
     func setupViewsInHeader(){
         //header 1 is top banner
+        titleHeader?.layer.cornerRadius = 25
         
+        let gradient2 = CAGradientLayer()
+        gradient2.frame = CGRect(x: 0, y: 0, width: 100, height: 100)
+
+        gradient2.colors = [UIColor.red.cgColor, UIColor.blue.cgColor]
+        
+        let gradient1 = CAGradientLayer()
+              gradient1.frame = self.titleHeader!.bounds
+              gradient1.colors = [UIColor.red.cgColor, UIColor.blue.cgColor]
+        
+        //insideView!.layer.addSublayer(gradient2)
+        titleHeader?.layer.addSublayer(gradient1)
+                
         //header 2 is middle display
-        headerSubview1?.layer.cornerRadius = 25
-        headerSubview1?.layer.backgroundColor = UIColor.main.cgColor
-        headerSubview2?.layer.backgroundColor = UIColor.main.cgColor
+       // countdownHeader?.layer.backgroundColor = UIColor.main.cgColor
+        /*
+        let backgroundCircle = CAShapeLayer()
+        let outsideRing = CAShapeLayer()
+        
+        let center = CGPoint(x: countdownHeader!.frame.width/2, y: countdownHeader!.frame.height/2)
+        
+        // outside ring only appears in the animation as the progress bar
+        outsideRing.path = UIBezierPath(arcCenter: center , radius: (countdownHeader!.frame.width - 20)/2, startAngle: CGFloat(0), endAngle: CGFloat(1*Float.pi), clockwise: true).cgPath
+        
+        outsideRing.fillColor = UIColor.accent.cgColor
+        outsideRing.lineWidth = 8
+        outsideRing.strokeEnd = 10
+        outsideRing.zPosition = -50
+        outsideRing.lineCap = CAShapeLayerLineCap.round
+        
+        // background circle is similar to the ring but it has a fill color and displays a "track in grey"
+        backgroundCircle.path = UIBezierPath(arcCenter: center, radius: (countdownHeader!.frame.width - 20)/2, startAngle: CGFloat(Float.pi/2.0), endAngle: CGFloat(Float.pi*2.5), clockwise: false).cgPath
+        
+        backgroundCircle.strokeColor = UIColor.background.cgColor
+        backgroundCircle.fillColor = UIColor.accent.cgColor
+        backgroundCircle.lineWidth = 8
+        backgroundCircle.zPosition = -60 // behind the ring
+        backgroundCircle.strokeEnd = 1
+        
+        countdownHeader?.layer.addSublayer(backgroundCircle)
+        countdownHeader?.layer.addSublayer(outsideRing)
+*/
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        
         let screenSize = UIScreen.main.bounds.size
 
         let maxHeight = screenSize.height - 200
@@ -203,9 +297,18 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         
         
         headerView?.frame = CGRect(x: 0, y: 0, width: screenSize.width, height: height)
-
-        headerSubview2?.frame = rectForCountdown(height, minHeight, maxHeight)
-        headerSubview1?.frame = rectForLabel(height, minHeight, maxHeight, rectForCountdown(minHeight, minHeight, maxHeight))
+        
+        //countdownHeader?.transform = CGAffineTransform(translationX: 1, y: 1)
+        //countdownHeader?.transform = CGAffineTransform(scaleX: 0.2, y: 0.2)
+        //translateCountdown(height, minHeight, maxHeight,countdownHeader!.frame)
+        
+        countdownHeader?.frame = rectForCountdown(height, minHeight, maxHeight)
+        //rerenderSubview2()
+        print("viewScrolled")
+        titleHeader?.frame = rectForLabel(height, minHeight, maxHeight, rectForCountdown(minHeight, minHeight, maxHeight))
+        
+        titleHeader?.layer.sublayers![0].frame = CGRect(x: 0, y: 0, width: titleHeader!.frame.width, height: titleHeader!.frame.height)
+        
     }
     
     func rectForLabel(_ height: CGFloat, _ minHeight: CGFloat, _ maxHeight: CGFloat, _ otherView: CGRect) -> CGRect{
@@ -251,6 +354,44 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
          }
         
          return CGRect(x: labelXEQ, y: labelYEQ, width: labelSizeXEQ, height: labelSizeYEQ)
+    }
+    
+    func translateCountdown(_ height: CGFloat, _ minHeight: CGFloat, _ maxHeight: CGFloat, _ current: CGRect) {
+        let screenSize = UIScreen.main.bounds.size
+        
+        //editables
+        let countdownConst: CGFloat = 0.77
+        let finalSizeConst: CGFloat = 0.8
+        
+        //final
+        let finalSize: CGFloat = (minHeight - view.safeAreaInsets.top) * finalSizeConst
+        let finalX: CGFloat = screenSize.width - finalSize - 25
+        let finalY: CGFloat = (minHeight + view.safeAreaInsets.top)/2 - finalSize/2
+        
+        //initial
+        let countdownsize = screenSize.width * countdownConst
+        let countdownX = (screenSize.width/2) - (countdownsize/2)
+        let countdownY = (screenSize.height/2) - (countdownsize/2)
+        
+        let countdownSizeEQ = ((countdownsize - finalSize)/(maxHeight - minHeight)) * (height - maxHeight) + countdownsize
+        
+        var countdownXEQ: CGFloat = 0
+        var countdownYEQ: CGFloat = 0
+
+        if(height <= maxHeight){
+            countdownXEQ = ((countdownX - finalX)/(maxHeight - minHeight)) * (height - maxHeight) + countdownX
+            countdownYEQ = ((countdownY - finalY)/(maxHeight - minHeight)) * (height - maxHeight) + countdownY
+        }else{
+            print("height > max")
+            countdownXEQ = (screenSize.width/2) - (countdownSizeEQ/2)
+            countdownYEQ = (screenSize.height/2) - (countdownSizeEQ/2)
+        }
+        
+        //countdownHeader?.transform = CGAffineTransform(translationX: countdownXEQ-current.minX, y: countdownYEQ-current.minY)
+        countdownHeader?.transform = CGAffineTransform(translationX: 10, y: -10)
+        countdownHeader?.transform = CGAffineTransform(scaleX: finalSize/countdownsize, y: finalSize/countdownsize)
+        
+        
     }
     
     func rectForCountdown(_ height: CGFloat, _ minHeight: CGFloat, _ maxHeight: CGFloat) -> CGRect{
@@ -808,6 +949,14 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     // Animates the transition, if the animation is not already running.
     private func animateTransitionIfNeeded(to state: State, duration: TimeInterval) {
         
+        let screenSize = UIScreen.main.bounds.size
+
+        let maxHeight = screenSize.height - 200
+        let minHeight: CGFloat = 150
+        
+        let y = (screenSize.height - drawerHeightConstraint.constant)
+        let height = max(y, minHeight)
+        
         // ensure that the animators array is empty (which implies new animations need to be created)
         guard runningAnimators.isEmpty else { return }
         
@@ -817,8 +966,10 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             switch state {
             case .open:
                 self.drawerHeightConstraint.constant = self.popupOffset
+                self.titleHeader?.frame = CGRect(x: 0, y: 0, width: 20, height: 20)
             case .closed:
                 self.drawerHeightConstraint.constant = 150
+                self.titleHeader?.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
             }
             self.view.layoutIfNeeded()
             self.scrollViewDidScroll(self.scheduleCollectionView)
@@ -836,7 +987,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             case .current:
                 ()
             }
-            
+            self.titleHeader?.layoutSublayers(of: self.titleHeader!.layer.sublayers![0])
+
             // manually reset the constraint positions
             switch currentState {
             case .open:
